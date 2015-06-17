@@ -1,6 +1,8 @@
+'use strict';
+
 import React from 'react';
 import Router from 'react-router';
-import { DefaultRoute, Link, Route, RouteHandler } from 'react-router';
+import { Link, Route, RouteHandler } from 'react-router';
 
 import LoginHandler from './components/Login.js';
 
