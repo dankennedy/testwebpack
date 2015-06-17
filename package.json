@@ -5,7 +5,7 @@
   "repository": "github.com:dankennedy/testwebpack",
   "main": "lib/server/server.js",
   "scripts": {
-    "start": "NODE_PATH=lib NODE_ENV=development node lib/server/server.js",
+    "start": "node_modules/.bin/jshint lib/server lib/shared && NODE_PATH=lib NODE_ENV=development node lib/server/server.js",
     "build": "webpack -p -d --progress --colors"
   },
   "author": "dankennedy",
@@ -27,5 +27,8 @@
     "react-router": "^0.13.3",
     "webpack": "^1.9.11",
     "webpack-dev-server": "^1.9.0"
+  },
+  "dependencies": {
+    "lodash": "^3.9.3"
   }
 }
