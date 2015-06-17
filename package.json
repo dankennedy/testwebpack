@@ -1,0 +1,22 @@
+{
+    "name": "testwebpack",
+    "version": "1.0.0",
+    "description": "trying out webpack",
+    "main": "index.js",
+    "scripts": {
+        "start": "webpack-dev-server --hot --progress --colors",
+        "build": "webpack -p -d --progress --colors"
+    },
+    "author": "dankennedy",
+    "license": "ISC",
+    "devDependencies": {
+        "babel-core": "^5.5.8",
+        "babel-loader": "^5.1.4",
+        "node-libs-browser": "^0.5.2",
+        "react": "^0.13.3",
+        "react-hot-loader": "^1.2.7",
+        "react-router": "^0.13.3",
+        "webpack": "^1.9.11",
+        "webpack-dev-server": "^1.9.0"
+    }
+}
