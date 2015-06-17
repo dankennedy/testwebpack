@@ -1,0 +1,8 @@
+{
+    "logging": {
+        "level": "info",
+        "stdout": "info",
+        "default": "log/app.log",
+        "error": "log/error.log"
+    }
+}

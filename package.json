@@ -5,8 +5,9 @@
   "repository": "github.com:dankennedy/testwebpack",
   "main": "lib/server/server.js",
   "scripts": {
-    "start": "node_modules/.bin/jshint lib/server lib/shared && NODE_PATH=lib NODE_ENV=development node lib/server/server.js",
-    "build": "webpack -p -d --progress --colors"
+    "start": "npm run lint && NODE_PATH=lib NODE_ENV=development node lib/server/server.js",
+    "build": "webpack -p -d --progress --colors",
+    "lint": "node_modules/.bin/jshint lib/server lib/shared"
   },
   "author": "dankennedy",
   "license": "ISC",
@@ -29,6 +30,9 @@
     "webpack-dev-server": "^1.9.0"
   },
   "dependencies": {
+    "bunyan": "^1.4.0",
+    "bunyan-prettystream": "^0.1.3",
+    "express-bunyan-logger": "^1.1.1",
     "lodash": "^3.9.3"
   }
 }

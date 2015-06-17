@@ -7,6 +7,7 @@ module.exports = {
         "./lib/client/app.js"
     ],
     output: {
+        devtool: '#eval-source-map',
         path: __dirname + '/public/build',
         filename: "bundle.js",
         publicPath: '/build/'
