@@ -2,10 +2,10 @@ var webpack = require('webpack');
 module.exports = {
     entry: [
       'webpack/hot/only-dev-server',
-      "./js/app.js"
+      "./lib/client/app.js"
     ],
     output: {
-        path: __dirname + '/build',
+        path: __dirname + '/public',
         filename: "bundle.js"
     },
     module: {
@@ -92,24 +92,14 @@ module.exports = {
         // Environments
         "browser"       : true,     // Web Browser (window, document, etc)
         "browserify"    : false,    // Browserify (node.js code in the browser)
-        "couch"         : false,    // CouchDB
         "devel"         : true,     // Development/debugging (alert, confirm, etc)
-        "dojo"          : false,    // Dojo Toolkit
-        "jasmine"       : false,    // Jasmine
         "jquery"        : false,    // jQuery
         "mocha"         : true,     // Mocha
-        "mootools"      : false,    // MooTools
         "node"          : false,    // Node.js
         "nonstandard"   : false,    // Widely adopted globals (escape, unescape, etc)
         "phantom"       : false,    // PhantomJS
-        "prototypejs"   : false,    // Prototype and Scriptaculous
-        "qunit"         : false,    // QUnit
-        "rhino"         : false,    // Rhino
-        "shelljs"       : false,    // ShellJS
         "typed"         : false,    // Globals for typed array constructions
         "worker"        : false,    // Web Workers
-        "wsh"           : false,    // Windows Scripting Host
-        "yui"           : false,    // Yahoo User Interface
 
         // Custom Globals
         "globals"       : {}        // additional predefined global variables
