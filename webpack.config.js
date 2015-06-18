@@ -18,7 +18,7 @@ module.exports = {
         "extensions": [
             "",
             ".js",
-            "jsx"
+            ".jsx"
         ]
     },
     module: {
@@ -28,7 +28,7 @@ module.exports = {
             loader: 'jsxhint?harmony'
         }],
         loaders: [{
-            test: /\.js?$/,
+            test: /(\.js|\.jsx)?$/,
             loaders: ['react-hot', 'babel'],
             exclude: /node_modules/
         }, {
