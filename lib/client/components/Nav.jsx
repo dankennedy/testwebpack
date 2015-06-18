@@ -11,9 +11,10 @@ let Nav = React.createClass({
       <nav className="nav-row">
         <ul>
           <li><Link to="home">Home</Link></li>
-          <li><Link to="app">Home</Link></li>
-          <li><Link to="app">Home</Link></li>
-          <li><Link to="app">Home</Link></li>
+          <li><Link to="book">Book</Link></li>
+          <li><Link to="gallery">Gallery</Link></li>
+          <li><Link to="prices">Prices</Link></li>
+          <li><Link to="diary">Availability</Link></li>
         </ul>
       </nav>
     );
