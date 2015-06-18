@@ -1,12 +1,14 @@
 'use strict';
 
 import React from 'react';
+import { Link } from 'react-router';
 
 let Home = React.createClass({
 
   render() {
     return(
       <div className="Home">
+        <div className="content-block">
           <h2>Welcome</h2>
           <p>
               Thimble Cottage is a grade 2 listed fishermans cottage in one of Whitby's oldest smugglers yards. Loggerhead Yard runs between New Quay Road on the harbourside and Baxtergate, the main shopping street. Within a few yards of the door you can either browse through the shops or be looking across the upper harbour towards Captain Cook's house. All over the town you will find tea rooms and cafes to relax in. There are also many pubs and restaurants serving delicious locally caught seafood.
@@ -19,6 +21,9 @@ let Home = React.createClass({
               away on the harbourside. If you don't mind a little walk you can usually find free parking a 5 minute walk
               back out of town on the side of Pannett Park.
           </p>
+        </div>
+
+        <div className="content-block">
           <h2>Facilities</h2>
           <ul>
               <li>Sleeps 4</li>
@@ -30,6 +35,29 @@ let Home = React.createClass({
               <li>Wifi</li>
               <li>No pets (sorry)</li>
           </ul>
+        </div>
+
+        <div className="content-block">
+          <Link to="book">Book</Link>
+        </div>
+
+        <div className="content-block">
+          <h2>Nearby</h2>
+          <p>
+              There are a selection of walk leaflets and maps for your use in the cottage. Why not leave the car and visit the many villages in the beautiful Esk Valley by rail from Whitby. At Grosmont you can catch the North York Moors Steam Railway and travel to Pickering or stop off at Goathland (Aidensfield in Heartbeat). There is an excellent sandy beach, two miles long, within easy walking distance of the cottage.
+          </p>
+          <p>
+              There are coastal villages, cliff top walks and woodland walks in Newtondale, but best of all is the heather time when the moors are alive with colour.
+          </p>
+        </div>
+
+        <div className="content-block">
+            <h2>Where Are We</h2>
+            <p>
+                15 Loggerhead Yard, Whitby, YO21 1DL
+            </p>
+            <div id="map-canvas"></div>
+        </div>
 
       </div>
     );
