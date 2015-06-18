@@ -2,10 +2,8 @@
 @import "bourbon/bourbon";
 @import "base/base";
 
-
-$base-font-family: $monospace;
-
-
-h1 {
-  font-size: golden-ratio(20px,  1);
+@for $i from 1 through 6 {
+  h#{$i} {
+    font-size: modular-scale(6 - $i);
+  }
 }
