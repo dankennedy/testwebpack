@@ -1,0 +1,11 @@
+
+@import "bourbon/bourbon";
+@import "base/base";
+
+
+$base-font-family: $monospace;
+
+
+h1 {
+  font-size: golden-ratio(20px,  1);
+}

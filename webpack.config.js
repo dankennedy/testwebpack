@@ -1,4 +1,6 @@
-var webpack = require('webpack');
+var webpack = require('webpack'),
+    path = require('path');
+
 module.exports = {
     entry: [
         'webpack/hot/only-dev-server',
@@ -12,21 +14,27 @@ module.exports = {
         filename: "bundle.js",
         publicPath: '/build/'
     },
+    resolve: {
+        "extensions": [
+            "",
+            ".js",
+            "jsx"
+        ]
+    },
     module: {
         preLoaders: [{
             test: /\.jsx?/,
             exclude: __dirname + '/node_modules',
-            loader: 'jsxhint-loader?harmony'
+            loader: 'jsxhint?harmony'
         }],
         loaders: [{
             test: /\.js?$/,
             loaders: ['react-hot', 'babel'],
             exclude: /node_modules/
         }, {
-            test: /\.css$/,
-            loader: "style-loader!css-loader"
-        },
-        {
+            test: /\.(css|scss)$/,
+            loader: "style!css!sass?outputStyle=expanded&includePaths[]=" + (path.resolve(__dirname, "./css")),
+        }, {
             test: /\.(png|jpg|jpeg|gif)$/,
             loader: 'url-loader?limit=8192'
         }],
