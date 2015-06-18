@@ -24,7 +24,11 @@ module.exports = {
             exclude: /node_modules/
         }, {
             test: /\.css$/,
-            loader: "style!css"
+            loader: "style-loader!css-loader"
+        },
+        {
+            test: /\.(png|jpg|jpeg|gif)$/,
+            loader: 'url-loader?limit=8192'
         }],
         postLoaders: []
     },
