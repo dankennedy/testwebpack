@@ -78,7 +78,7 @@ body {
   @include outer-container;
   padding-top: 30px;
   @include media($mobile) {
-    padding-top: 10px;
+    padding: 10px;
   }
 }
 
@@ -114,6 +114,11 @@ body {
 }
 
 
+.formfield {
+  label {
+    cursor: pointer;
+  }
+}
 .formfield.invalid {
   input, select, textarea {
     border-color: #CC0000;

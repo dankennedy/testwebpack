@@ -6,8 +6,10 @@
   "main": "lib/server/server.js",
   "scripts": {
     "start": "npm run lint && NODE_PATH=lib NODE_ENV=development node lib/server/server.js",
+    "test": "npm run lint && NODE_PATH=lib NODE_ENV=development node_modules/.bin/mocha -u tdd",
     "build": "webpack -p -d --progress --colors",
-    "lint": "node_modules/.bin/jshint lib/server lib/shared"
+    "lint": "node_modules/.bin/jshint lib/server lib/shared test",
+    "testwatch": "npm run lint && NODE_PATH=lib NODE_ENV=development node_modules/.bin/mocha -u tdd --reporter min --watch"
   },
   "author": "dankennedy",
   "license": "ISC",
@@ -23,6 +25,7 @@
     "jshint": "^2.8.0",
     "jshint-loader": "^0.8.3",
     "jsxhint-loader": "^0.2.0",
+    "mocha": "^2.2.5",
     "node-libs-browser": "^0.5.2",
     "node-sass": "^3.2.0",
     "react": "^0.13.3",

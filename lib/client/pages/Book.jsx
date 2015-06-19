@@ -13,7 +13,9 @@ let Book = React.createClass({
   render() {
     return(
       <div className="Book">
-        <Input id="arrivaldate" label="Arrival Date" type="date" ref="arrivaldate" validations={[new validations.Required()]} />
+        <Input id="arrivaldate" label="Arrival Date" type="date" ref="arrivaldate"
+          placeholder="Required (dd/mm/yyyy)"
+          validations={[new validations.Required()]} />
         <NumberInput id="numberofnights" label="Number of nights" value={2} min={2} max={14} />
         <Input id="firstname" label="First name" />
         <Input id="lastname" label="Last name" />
