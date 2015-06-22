@@ -13,15 +13,32 @@ let Book = React.createClass({
   render() {
     return(
       <div className="Book">
+
         <Input id="arrivaldate" label="Arrival Date" type="date" ref="arrivaldate"
           placeholder="Required (dd/mm/yyyy)"
           validations={[new validations.Required()]} />
-        <NumberInput id="numberofnights" label="Number of nights" value={2} min={2} max={14} />
-        <Input id="firstname" label="First name" />
-        <Input id="lastname" label="Last name" />
-        <Input id="email" label="Email" type="email" />
+
+        <NumberInput id="numberofnights" label="Number of nights" value={2} min={2} max={14}
+          validations={[new validations.Required()]} />
+
+        <Input id="firstname" label="First name"
+          placeholder="Required"
+          maxlength={100}
+          validations={[new validations.Required(), new validations.StringLength(100)]} />
+
+        <Input id="lastname" label="Last name"
+          placeholder="Required"
+          maxlength={100}
+          validations={[new validations.Required(), new validations.StringLength(100)]} />
+
+        <Input id="email" label="Email" type="email"
+          placeholder="Required"
+          validations={[new validations.Required()]} />
+
         <Input id="address" label="Address" />
+
         <button type="submit" onClick={this.handleClick}>Submit</button>
+
       </div>
     );
   }
