@@ -93,10 +93,19 @@ suite('Validations', function() {
             assert.equal(true, new validations.StringLength().validate(""));
         });
         test('should return true for string length less than max', function() {
-            assert.equal(true, new validations.StringLength(5).validate("ABCD"));
+            assert.equal(true, new validations.StringLength(null, 5).validate("ABCD"));
+        });
+        test('should return true for string length less than max2', function() {
+            assert.equal(true, new validations.StringLength(0, 5).validate("ABCD"));
         });
         test('should return false for string length more than max', function() {
-            assert.equal(false, new validations.StringLength(5).validate("ABCDEFG"));
+            assert.equal(false, new validations.StringLength(null, 5).validate("ABCDEFG"));
+        });
+        test('should return false for string length more than max2', function() {
+            assert.equal(false, new validations.StringLength(1, 5).validate("ABCDEFG"));
+        });
+        test('should return false for string length less than min', function() {
+            assert.equal(false, new validations.StringLength(3, 5).validate("AB"));
         });
     });
 
@@ -121,6 +130,34 @@ suite('Validations', function() {
             for (var i = 0; i < invalid.length; i++) {
               assert.equal(false, emailaddress.validate(invalid[i]),
                 "Validation succeeded for invalid address " + invalid[i]);
+            }
+        });
+    });
+
+    suite('IsDate', function() {
+
+        var valid = [
+                {val: "14/04/1973", fmt: "DD/MM/YYYY"},
+                {val: "1973-04-14", fmt: "YYYY-MM-DD"},
+                {val: "1973-4-14", fmt: "YYYY-M-DD"}
+            ],
+            invalid = [
+                {val: "14/14/1973", fmt: "DD/MM/YYYY"},
+                {val: "14/4/1973", fmt: "DD/MM/YYYY"},
+                {val: "1/04/1973", fmt: "DD/MM/YYYY"}
+            ];
+
+        test('should return true for all valid dates', function() {
+            for (var i = 0; i < valid.length; i++) {
+              assert.equal(true, new validations.IsDate(valid[i].fmt).validate(valid[i].val),
+                "Validation failed for valid date " + valid[i].fmt + ":" + valid[i].val);
+            }
+        });
+
+        test('should return false for all invalid dates', function() {
+            for (var i = 0; i < invalid.length; i++) {
+              assert.equal(false, new validations.IsDate(invalid[i].fmt).validate(invalid[i].val),
+                "Validation succeeded for invalid date " + invalid[i].fmt + ":" + invalid[i].val);
             }
         });
     });

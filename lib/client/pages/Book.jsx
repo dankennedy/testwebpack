@@ -25,7 +25,7 @@ let Book = React.createClass({
           type="date"
           ref="arrivaldate"
           placeholder="Required (dd/mm/yyyy)"
-          validations={[new validations.Required()]} />
+          validations={[new validations.Required(), new validations.IsDate("DD/MM/YYYY")]} />
 
         <NumberInput id="numberofnights"
           label="Number of nights"
