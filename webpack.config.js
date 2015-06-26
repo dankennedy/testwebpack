@@ -5,7 +5,7 @@ module.exports = {
     entry: [
         'webpack/hot/only-dev-server',
         // The script refreshing the browser on none hot updates
-        'webpack-dev-server/client?http://localhost:8080',
+        'webpack-dev-server/client?http://testserver.firstcs.local:8080',
         "./lib/client/app.js"
     ],
     output: {

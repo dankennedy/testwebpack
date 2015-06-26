@@ -9,7 +9,7 @@ let Home = React.createClass({
     return(
       <div className="Home">
         <div className="content-block">
-          <h2>Welcome</h2>
+          <h2>Welcome udpated</h2>
           <p>
               Thimble Cottage is a grade 2 listed fishermans cottage in one of Whitby's oldest smugglers yards. Loggerhead Yard runs between New Quay Road on the harbourside and Baxtergate, the main shopping street. Within a few yards of the door you can either browse through the shops or be looking across the upper harbour towards Captain Cook's house. All over the town you will find tea rooms and cafes to relax in. There are also many pubs and restaurants serving delicious locally caught seafood.
           </p>

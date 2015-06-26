@@ -1,6 +1,12 @@
 'use strict';
 var validations = require('../../shared/validations');
 
+/*jshint -W030 */
+require('react-date-picker/index.css'),
+require('moment/locale/en-gb');
+
+var DatePicker = require('react-date-picker');
+
 import React from 'react';
 import {Input, NumberInput} from '../components/Inputs';
 
@@ -16,6 +22,10 @@ let Book = React.createClass({
       'Address': this.refs.address.state.value}
       );
   },
+  onArrivalDateChange(dateText, moment) {
+    console.log(dateText);
+    console.log(moment.format());
+  },
   render() {
     return(
       <div className="Book">
@@ -26,7 +36,12 @@ let Book = React.createClass({
           ref="arrivaldate"
           placeholder="Required (dd/mm/yyyy)"
           validations={[new validations.Required(), new validations.IsDate("DD/MM/YYYY")]} />
-
+        <DatePicker
+            minDate='01/01/2015'
+            maxDate='31/12/2015'
+            dateFormat='DD/MM/YYYY'
+            date={new Date()}
+            onChange={this.onArrivalDateChange} />
         <NumberInput id="numberofnights"
           label="Number of nights"
           ref="numberofnights"
