@@ -7,7 +7,6 @@
   "scripts": {
     "start": "npm run lint && NODE_PATH=lib NODE_ENV=development node lib/server/server.js",
     "test": "npm run lint && NODE_PATH=lib NODE_ENV=development node_modules/.bin/mocha -u tdd",
-    "citest": "npm run lint && SET NODE_PATH=lib && SET NODE_ENV=development && node_modules/.bin/mocha -u tdd --reporter mocha-teamcity-reporter",
     "build": "webpack -p -d --progress --colors",
     "lint": "node_modules/.bin/jshint lib/server lib/shared test",
     "testwatch": "npm run lint && NODE_PATH=lib NODE_ENV=development node_modules/.bin/mocha -u tdd --reporter min --watch"
