@@ -28,7 +28,7 @@ let Book = React.createClass({
   },
   render() {
     return(
-      <div className="Book">
+      <div className="Book page-container">
 
         <Input id="arrivaldate"
           label="Arrival Date"
@@ -42,6 +42,7 @@ let Book = React.createClass({
             dateFormat='DD/MM/YYYY'
             date={new Date()}
             onChange={this.onArrivalDateChange} />
+
         <NumberInput id="numberofnights"
           label="Number of nights"
           ref="numberofnights"

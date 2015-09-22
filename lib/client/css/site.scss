@@ -1,11 +1,18 @@
 
 $visual-grid: false;
+$visual-grid-color: red;
+$visual-grid-index: front;
+$visual-grid-opacity: 0.1;
+
 
 @import "bourbon/bourbon";
 @import "base/base";
 @import "neat/neat";
+@import "pages/index";
 
 $mobile: new-breakpoint(max-width 500px 4);
+$tablet: new-breakpoint(max-width 768px 8);
+$desktop: new-breakpoint(min-width 850px);
 
 @for $i from 1 through 6 {
   h#{$i} {
@@ -76,29 +83,29 @@ body {
 
 .content-wrapper {
   @include outer-container;
+}
+
+.page-container {
+  @include span-columns(10);
+  @include shift(1);
   padding-top: 30px;
-  @include media($mobile) {
-    padding: 10px;
+
+  @include media($tablet) {
+    @include shift(0);
+    padding: 20px;
   }
 }
 
-.content-container {
-  @include span-columns(10);
-  @include shift(1);
+.content-block {
+  @include span-columns(6);
 
-  .content-block {
-    @include span-columns(5);
+  @include media($tablet) {
+    @include span-columns(10);
   }
+}
 
-  @include media($mobile) {
-    @include span-columns(4);
-    @include shift(0);
-
-    .content-block {
-      padding: 5px;
-      @include span-columns(4);
-    }
-  }
+.last {
+  @include omega;
 }
 
 #map-canvas {
@@ -114,6 +121,9 @@ body {
 }
 
 
+#{$all-text-inputs} {
+  padding: 0.75em;
+}
 .formfield {
   label {
     cursor: pointer;
@@ -123,7 +133,14 @@ body {
   input, select, textarea {
     border-color: #CC0000;
   }
-  input:focus, select:focus, textarea:focus {
-      box-shadow: 0px 1px 3px #CC0000 inset;
-  }
+}
+
+.dp-nav-table {
+  margin: 0;
+}
+#{$all-text-inputs-focus},
+#{$all-text-inputs-hover} {
+  box-shadow: 0px 1px 2px #C77966 inset;
+  border-color: #C77966;
+  transition: all 0.1s ease 0.1s, all 0.1s ease 0.1s;
 }

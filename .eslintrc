@@ -1,0 +1,31 @@
+{
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
+  "globals": {
+
+  },
+  "ecmaFeatures": {
+    "jsx": true,
+    "modules": false
+  },
+  "parser": "babel-eslint",
+  "plugins": [
+      "react"
+  ],
+  "rules": {
+    "quotes": [1, "single", "avoid-escape"],
+    "semi": [2, "always"],
+    "brace-style": 2,
+    "new-cap": 1,
+    "strict": [2, "global"],
+    "no-extra-strict": 0,
+    "react/jsx-uses-react": 1,
+    "no-unused-vars": [2, {"vars": "local", "args": "none"}],
+    "no-underscore-dangle": 0,
+    "no-new": 0,
+    "camelcase": 0
+  }
+}
