@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Link } from 'react-router';
-var logo = require('../img/header_logo.png');
+const logo = require('../img/header_logo.png');
 
 let Nav = React.createClass({
 

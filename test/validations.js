@@ -93,19 +93,19 @@ suite('Validations', function() {
             assert.equal(true, new validations.StringLength().validate(''));
         });
         test('should return true for string length less than max', function() {
-            assert.equal(true, new validations.StringLength(null, 5).validate('ABCD'));
+            assert.equal(true, new validations.StringLength(5).validate('ABCD'));
         });
         test('should return true for string length less than max2', function() {
-            assert.equal(true, new validations.StringLength(0, 5).validate('ABCD'));
+            assert.equal(true, new validations.StringLength(5).validate('ABCD'));
         });
         test('should return false for string length more than max', function() {
-            assert.equal(false, new validations.StringLength(null, 5).validate('ABCDEFG'));
+            assert.equal(false, new validations.StringLength(5).validate('ABCDEFG'));
         });
         test('should return false for string length more than max2', function() {
-            assert.equal(false, new validations.StringLength(1, 5).validate('ABCDEFG'));
+            assert.equal(false, new validations.StringLength(5, 1).validate('ABCDEFG'));
         });
         test('should return false for string length less than min', function() {
-            assert.equal(false, new validations.StringLength(3, 5).validate('AB'));
+            assert.equal(false, new validations.StringLength(5, 3).validate('AB'));
         });
     });
 

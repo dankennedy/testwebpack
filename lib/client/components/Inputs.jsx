@@ -6,30 +6,61 @@ import Validations from '../../shared/validations';
 
 var InputMixin = {
   getDefaultProps() {
-    return {validations: []};
+    return {id: '', validations: [], handleChildChange: function(){}};
   },
   getInitialState() {
     return {
       value: this.props.value,
+      initialValue: this.props.value,
       isValid: true,
-      validationMessage: "",
-      validationsAdded: false
+      validationMessage: '',
+      validationsAdded: false,
+      isPristine: true,
+      isDirty: false
     };
   },
   handleChange(event) {
+
     var val = event.target.value;
-    this.setState({value: val});
-    this.validate(val);
+
+    this.setState({
+      value: val,
+      isPristine: false,
+      isDirty: val != this.state.initialValue
+    });
+
+    var validationResult = this.validate(val);
+
+    if (this.props.handleChildChange) {
+      this.props.handleChildChange(this.props.id,
+        val,
+        val != this.props.value,
+        validationResult);
+    }
+
+    if (this.props.onChange) {
+      this.props.onChange(event);
+    }
+
+  },
+  handleFocus(event) {
+    if (this.props.onFocus) {
+      this.props.onFocus(event);
+    }
+  },
+  handleBlur(event) {
+    if (this.props.onBlur) {
+        this.props.onBlur(event);
+    }
   },
   validate(val) {
     let vals = this.props.validations || [];
-
     if (!this.state.validationsAdded) {
         switch (this.props.type) {
-          case "email" :
+          case 'email' :
             vals.push(new Validations.EmailAddress());
             break;
-          case "number" :
+          case 'number' :
             vals.push(new Validations.IsNumber());
             break;
         }
@@ -39,11 +70,11 @@ var InputMixin = {
     if (vals.length) {
       for (var i = 0; i < vals.length; i++) {
         if (!vals[i].validate(val)) {
-          this.setState({isValid: false, validationMessage: vals[i].validationMessage});
+          return {isValid: false, validationMessage: vals[i].validationMessage};
           return;
         }
       }
-      this.setState({isValid: true, validationMessage: ""});
+      return {isValid: true, validationMessage: ''};
     }
   },
 };
@@ -51,20 +82,22 @@ var InputMixin = {
 export var Input = React.createClass({
   mixins: [InputMixin],
   getDefaultProps() {
-    return {type: "text"};
+    return {type: 'text'};
   },
   render() {
+    var p = this.props, d = p.value;
     return(
-      <div className={classNames("formfield", {"invalid": !this.state.isValid})}>
-        <label htmlFor={this.props.id}>{this.props.label}</label>
-        <input type={this.props.type || "text"}
-               id={this.props.id}
-               name={this.props.id}
-               defaultValue={this.state.value}
-               placeholder={this.props.placeholder}
-               maxLength={this.props.maxlength}
-               title={this.state.validationMessage}
-               onChange={this.handleChange}>
+      <div className={classNames('formfield', {'invalid': d.isvalid===false})}>
+        <label htmlFor={p.id}>{p.label}</label>
+        <input type={p.type || 'text'}
+               id={p.id}
+               name={p.id}
+               placeholder={p.placeholder}
+               maxLength={p.maxlength}
+               title={d.validationErrors}
+               valueLink={p.valueLink}
+               onFocus={this.handleFocus}
+               onBlur={this.handleBlur}>
         </input>
       </div>
     );
@@ -75,21 +108,23 @@ export var Input = React.createClass({
 export var NumberInput = React.createClass({
   mixins: [InputMixin],
   getDefaultProps() {
-    return {type: "number"};
+    return {type: 'number'};
   },
   render() {
+    var p = this.props, d = p.value;
     return(
-      <div className={classNames("formfield", {"invalid": !this.state.isValid})}>
-        <label htmlFor="">{this.props.label}</label>
-        <input type="number"
-               id={this.props.id}
-               name={this.props.id}
-               min={this.props.min}
-               max={this.props.max}
-               placeholder={this.props.placeholder}
-               defaultValue={this.props.value}
-               title={this.state.validationMessage}
-               onChange={this.handleChange}>
+      <div className={classNames('formfield', {'invalid': d.isvalid===false})}>
+        <label htmlFor=''>{p.label}</label>
+        <input type='number'
+               id={p.id}
+               name={p.id}
+               min={p.min}
+               max={p.max}
+               placeholder={p.placeholder}
+               title={d.validationErrors}
+               valueLink={p.valueLink}
+               onFocus={this.handleFocus}
+               onBlur={this.handleBlur}>
         </input>
       </div>
     );
@@ -99,16 +134,19 @@ export var NumberInput = React.createClass({
 export var TextArea = React.createClass({
   mixins: [InputMixin],
   render() {
+    var p = this.props, d = p.value;
     return(
-      <div className={classNames("formfield", {"invalid": !this.state.isValid})}>
-        <label htmlFor="">{this.props.label}</label>
+      <div className={classNames('formfield', {'invalid': d.isvalid===false})}>
+        <label htmlFor=''>{p.label}</label>
         <textarea
-               id={this.props.id}
-               name={this.props.id}
-               placeholder={this.props.placeholder}
-               defaultValue={this.props.value}
-               title={this.state.validationMessage}
-               onChange={this.handleChange}>
+               id={p.id}
+               name={p.id}
+               placeholder={p.placeholder}
+               value={this.state.value}
+               title={d.validationErrors}
+               valueLink={p.valueLink}
+               onFocus={this.handleFocus}
+               onBlur={this.handleBlur}>
         </textarea>
       </div>
     );
