@@ -43,7 +43,7 @@ export default React.createClass({
     }, this);
 
     return(
-      <form className={classNames({'invalid': !this.state.isValid})}>
+      <form className={classNames('', {'invalid': this.props.isValid===false, 'isdirty': this.props.isDirty})}>
         {this.props.children}
       </form>
     );

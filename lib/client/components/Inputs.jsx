@@ -16,7 +16,7 @@ var InputMixin = {
       validationMessage: '',
       validationsAdded: false,
       isPristine: true,
-      isDirty: false
+      isdirty: false
     };
   },
   handleChange(event) {
@@ -87,7 +87,7 @@ export var Input = React.createClass({
   render() {
     var p = this.props, d = p.value;
     return(
-      <div className={classNames('formfield', {'invalid': d.isvalid===false})}>
+      <div className={classNames('formfield', {'invalid': d.isvalid===false, 'isdirty': d.isdirty})}>
         <label htmlFor={p.id}>{p.label}</label>
         <input type={p.type || 'text'}
                id={p.id}
@@ -113,7 +113,7 @@ export var NumberInput = React.createClass({
   render() {
     var p = this.props, d = p.value;
     return(
-      <div className={classNames('formfield', {'invalid': d.isvalid===false})}>
+      <div className={classNames('formfield', {'invalid': d.isvalid===false, 'isdirty': d.isdirty})}>
         <label htmlFor=''>{p.label}</label>
         <input type='number'
                id={p.id}
@@ -136,7 +136,7 @@ export var TextArea = React.createClass({
   render() {
     var p = this.props, d = p.value;
     return(
-      <div className={classNames('formfield', {'invalid': d.isvalid===false})}>
+      <div className={classNames('formfield', {'invalid': d.isvalid===false, 'isdirty': d.isdirty})}>
         <label htmlFor=''>{p.label}</label>
         <textarea
                id={p.id}
