@@ -8,8 +8,6 @@ export default React.createClass({
   getInitialState() {
     return {
       isValid: true,
-      validationMessages: [],
-      isPristine: true,
       isDirty: false
     };
   },
@@ -22,22 +20,11 @@ export default React.createClass({
       }.bind(this)
     };
   },
-  // _handleChildChange: function (id, value, isDirty, validationResult) {
-
-  //   console.log('_handleChildChange:', id, value, isDirty, validationResult);
-
-  //   this.setState({
-  //     isPristine: false
-  //   });
-
-  // },
 
   render() {
 
     React.Children.forEach(this.props.children, function (child) {
       if (child && child.key) {
-        // child.props.handleChildChange = this._handleChildChange;
-        // console.log(child, child.id, child.key);
         child.props.valueLink = this._makeValueLink(child.key);
       }
     }, this);

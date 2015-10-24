@@ -129,7 +129,7 @@ body {
     cursor: pointer;
   }
 }
-.formfield.invalid {
+.formfield.isdirty.invalid {
   input, select, textarea {
     border-color: #CC0000;
   }
@@ -137,7 +137,7 @@ body {
 
 #{$all-text-inputs-focus},
 #{$all-text-inputs-hover} {
-  box-shadow: 0px 1px 1px #C77966 inset;
-  border-color: #C77966;
-  transition: all 0.2s ease 0.2s, all 0.2s ease 0.2s;
+  box-shadow: 0px 1px 1px #C77966 outset;
+  border-color: #4C8F78;
+  transition: all 0.1s ease 0.1s, all 0.1s ease 0.1s;
 }

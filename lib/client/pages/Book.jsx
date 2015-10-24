@@ -60,6 +60,7 @@ let Book = React.createClass({
       }
     };
 
+    // make a copy of the initial state so we can compare for dirty checking
     state.origform = _.transform(state.form, function(result, n, key) {
       result[key] = n.value;
     });
@@ -69,7 +70,10 @@ let Book = React.createClass({
 
   handleSubmit(e) {
     e.preventDefault();
-    console.log('Submitting: ', this.state);
+    let submitData = _.transform(this.state.form, function(result, n, key) {
+      result[key] = n.value;
+    });
+    console.log('Submitting: ', submitData);
   },
 
   onArrivalDateChange(dateText) {
@@ -123,11 +127,6 @@ let Book = React.createClass({
       return el.isdirty;
     });
 
-    //console.log(this.state);
-    // let errors = _.map(_.uniq(_.flatten(_.pluck(form, 'validationErrors'))), function(x) {
-    //   return <p>{x}</p>;
-    // });
-    // console.log('rendering');
     return(
 
       <Form className={classNames('page-container')}
