@@ -1,12 +1,22 @@
-
 .date-picker {
-  position: absolute;
-  margin-top: -12px;
+    position: absolute;
+    margin-top: -12px;
 }
+
 .dp-nav-table,
 .dp-table {
     margin: 0px;
 }
+
 .date-picker td {
-  padding: 0px;
+    padding: 0px;
+}
+
+.split-controls {
+    @include span-columns(4);
+}
+
+.split-bookingdescription {
+    @include span-columns(8);
+    padding: 40px 0;
 }

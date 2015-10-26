@@ -1,7 +1,7 @@
 'use strict';
 
-var assert = require('assert'),
-    validations = require('shared/validations.js');
+import assert from 'assert';
+import validations from 'shared/validations.js';
 
 suite('Validations', function() {
 
@@ -39,17 +39,17 @@ suite('Validations', function() {
 
     suite('WithinRange', function() {
 
-        test('should return true for null with no min/max', function() {
-            assert.equal(true, new validations.WithinRange().validate(null));
+        test('should return false for null with no min/max', function() {
+            assert.equal(false, new validations.WithinRange().validate(null));
         });
-        test('should return true for null with min/max', function() {
-            assert.equal(true, new validations.WithinRange(0, 10).validate(null));
+        test('should return false for null with min/max', function() {
+            assert.equal(false, new validations.WithinRange(0, 10).validate(null));
         });
-        test('should return true for undefined with no min/max', function() {
-            assert.equal(true, new validations.WithinRange().validate(void 0));
+        test('should return false for undefined with no min/max', function() {
+            assert.equal(false, new validations.WithinRange().validate(void 0));
         });
-        test('should return true for undefined with min/max', function() {
-            assert.equal(true, new validations.WithinRange(0, 10).validate(void 0));
+        test('should return false for undefined with min/max', function() {
+            assert.equal(false, new validations.WithinRange(0, 10).validate(void 0));
         });
         test('should return true for string within min/max', function() {
             assert.equal(true, new validations.WithinRange(0, 10).validate('5'));

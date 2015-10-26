@@ -104,6 +104,11 @@ body {
   }
 }
 
+.row {
+  @include outer-container;
+}
+
+
 .last {
   @include omega;
 }

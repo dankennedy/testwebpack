@@ -1,90 +1,147 @@
 'use strict';
-import validations from '../../shared/validations';
-
-import _ from 'lodash';
-
 import 'react-date-picker/index.css';
 import 'moment/locale/en-gb';
-import {classNames} from '../../shared/utils';
-
-var DatePicker = require('react-date-picker');
 
 import React from 'react';
+import _ from 'lodash';
+import axios from 'axios';
+import moment from 'moment';
+
+import validations from '../../shared/validations';
+import {classNames} from '../../shared/utils';
+import {Booking} from '../../shared/bookings';
 import {Input, NumberInput} from '../components/Inputs';
 import Form from '../components/Form';
 
+var DatePicker = require('react-date-picker');
+
 let Book = React.createClass({
 
-  getInitialState() {
-    var state = {
-      form: {
-        arrivaldate: {
-          value: null,
-          validations: [
-            new validations.Required(),
-            new validations.IsDate('DD/MM/YYYY')
-          ]
-        },
-        numberofnights: {
-          value: 2,
-          validations: [
-            new validations.Required(),
-            new validations.IsNumber(),
-            new validations.WithinRange(2, 14)
-          ]
-        },
-        firstname: {
-          value: '',
-          validations: [
-            new validations.Required(),
-            new validations.StringLength(100)
-          ]
-        },
-        lastname: {
-          value: '',
-          validations: [
-            new validations.Required(),
-            new validations.StringLength(100)
-          ]
-        },
-        email: {
-          value: '',
-          validations: [
-            new validations.Required(),
-            new validations.EmailAddress()
-          ]
-        },
-        address: {
-          value: ''
+    getInitialState() {
+        var state = {
+            form: {
+                arrivalDate: {
+                  value: null,
+                  validations: [
+                    new validations.Required(),
+                    new validations.IsDate('DD/MM/YYYY')
+                  ]
+                },
+                numberOfNights: {
+                  value: 2,
+                  validations: [
+                    new validations.Required(),
+                    new validations.IsNumber(),
+                    new validations.WithinRange(2, 14)
+                  ]
+                },
+                firstname: {
+                  value: '',
+                  validations: [
+                    new validations.Required(),
+                    new validations.StringLength(100)
+                  ]
+                },
+                lastname: {
+                  value: '',
+                  validations: [
+                    new validations.Required(),
+                    new validations.StringLength(100)
+                  ]
+                },
+                email: {
+                  value: '',
+                  validations: [
+                    new validations.Required(),
+                    new validations.EmailAddress()
+                  ]
+                },
+                address: {
+                  value: ''
+                }
+            },
+            existingBookings: [],
+            showDatePicker: false,
+            origform: {}
+        };
+
+        // make a copy of the initial state (values only) so we can compare for dirty checking
+        state.origform = _.transform(state.form, function(result, n, key) {
+          result[key] = n.value;
+        });
+
+        return state;
+    },
+
+    componentDidMount() {
+        axios.get('/api/bookings')
+          .then(function (response) {
+            this.setState({existingBookings: response});
+          }.bind(this))
+          .catch(function (response) {
+            console.error(response);
+          });
+
+        document.body.addEventListener('click', this.checkHideDatePicker);
+    },
+
+    checkHideDatePicker(e) {
+        if (this.state.showDatePicker &&
+            e.target.className !== 'date-picker-trigger' &&
+            !this.parentsHaveClassName(e.target, 'date-picker')) {
+
+            this.hideDatePicker();
         }
-      }
+    },
+
+    componentWillUnmount() {
+        document.body.removeEventListener('click', this.checkHideDatePicker);
+    },
+
+    parentsHaveClassName: function(element, className) {
+        var parent = element;
+        while (parent) {
+            if (parent.className && parent.className.indexOf(className) > -1)
+                return true;
+
+            parent = parent.parentNode;
+        }
+    },
+
+  _makeValueLink: function(key) {
+    var d = this.state.form[key];
+    return {
+      value: d == null ? null : (moment.isMoment(d.value) ? d.value.format('DD/MM/YYYY') : d.value),
+      requestChange: function(value) {
+        this.onFormChange(key, value);
+      }.bind(this)
     };
-
-    // make a copy of the initial state so we can compare for dirty checking
-    state.origform = _.transform(state.form, function(result, n, key) {
-      result[key] = n.value;
-    });
-
-    return state;
   },
 
   handleSubmit(e) {
     e.preventDefault();
-    let submitData = _.transform(this.state.form, function(result, n, key) {
-      result[key] = n.value;
-    });
-    console.log('Submitting: ', submitData);
+    console.log('Submitting: ', this.formDataToBookingJson());
   },
 
-  onArrivalDateChange(dateText) {
+  formDataToBookingJson() {
+    return _.transform(this.state.form, function(result, n, key) {
+      result[key] = (moment.isMoment(n.value) ? n.value.format() : n.value);
+    });
+  },
+
+  onArrivalDateChange(dateText, m) {
     var data = this.state.form;
-    data.arrivaldate.value = dateText;
+    data.arrivalDate.value = m;
     this.validate(data);
     this.setState({form: data, showDatePicker: false});
   },
 
-  onArrivalDateFocus() {
+  onArrivalDateFocus(e) {
     this.setState({showDatePicker: true});
+  },
+
+  hideDatePicker() {
+    this.setState({showDatePicker: false});
   },
 
   validate(data) {
@@ -112,7 +169,7 @@ let Book = React.createClass({
   onFormChange(key, value) {
     var data = this.state.form;
     data[key].value = value;
-    // console.log('onFormChange:', key, value, data[key]);
+    //console.log('onFormChange:', key, value, data[key]);
     this.validate(data);
     this.setState({form: data});
   },
@@ -121,65 +178,80 @@ let Book = React.createClass({
     let form = this.state.form;
 
     let formValid = _.every(form, function(el) {
-      return el.isvalid;
+        return el.isvalid;
     });
     let formDirty = _.some(form, function(el) {
-      return el.isdirty;
+        return el.isdirty;
     });
+    let booking = new Booking(this.formDataToBookingJson());
 
     return(
 
-      <Form className={classNames('page-container')}
-            onChange={this.onFormChange}
-            formData={form}
+      <Form className={classNames('page-container booking-form')}
             isValid={formValid}
             isDirty={formDirty}>
 
-        <Input key='arrivaldate' id='arrivaldate'
-          label='Arrival Date'
-          type='text'
-          value={form.arrivaldate}
-          placeholder='Click to select'
-          onFocus={this.onArrivalDateFocus} />
+            <div className='row'>
+                <div className='split-controls'>
+                    <Input key='arrivalDate' id='arrivalDate'
+                      label='Arrival Date'
+                      type='date'
+                      value={form.arrivalDate}
+                      placeholder='Click to select'
+                      readOnly={true}
+                      onFocus={this.onArrivalDateFocus}
+                      className='date-picker-trigger'
+                      valueLink={this._makeValueLink('arrivalDate')} />
 
-        {this.state.showDatePicker &&
-          <DatePicker
-            minDate={new Date()}
-            maxDate={new Date(new Date().getFullYear() + 1, 11, 31)}
-            dateFormat='DD/MM/YYYY'
-            date={new Date()}
-            onChange={this.onArrivalDateChange} />
-        }
+                    {this.state.showDatePicker &&
+                      <DatePicker
+                        minDate={new Date()}
+                        maxDate={new Date(new Date().getFullYear() + 1, 11, 31)}
+                        dateFormat='DD/MM/YYYY'
+                        date={new Date()}
+                        onChange={this.onArrivalDateChange}
+                        hideFooter={true} />
+                    }
 
-        <NumberInput key='numberofnights' id='numberofnights'
-          label='Number of nights'
-          value={form.numberofnights}
-          min={2}
-          max={14} />
+                    <NumberInput key='numberOfNights' id='numberOfNights'
+                      label='Number of nights'
+                      value={form.numberOfNights}
+                      min={2}
+                      max={14}
+                      valueLink={this._makeValueLink('numberOfNights')} />
+                </div>
+                <div className='split-bookingdescription'>
+                    <p>{booking.getSummaryDescription()}</p>
+                </div>
+            </div>
 
-        <Input key='firstname' id='firstname'
-          label='First name'
-          placeholder='Required'
-          value={form.firstname}
-          maxlength={100} />
+            <Input key='firstname' id='firstname'
+              label='First name'
+              placeholder='Required'
+              value={form.firstname}
+              maxlength={100}
+              valueLink={this._makeValueLink('firstname')} />
 
-        <Input key='lastname' id='lastname'
-          label='Last name'
-          placeholder='Required'
-          maxlength={100}
-          value={form.lastname} />
+            <Input key='lastname' id='lastname'
+              label='Last name'
+              placeholder='Required'
+              maxlength={100}
+              value={form.lastname}
+              valueLink={this._makeValueLink('lastname')} />
 
-        <Input key='email' id='email'
-          label='Email'
-          type='email'
-          placeholder='Required'
-          value={form.email} />
+            <Input key='email' id='email'
+              label='Email'
+              type='email'
+              placeholder='Required'
+              value={form.email}
+              valueLink={this._makeValueLink('email')} />
 
-        <Input key='address' id='address'
-          label='Address'
-          value={form.address} />
+            <Input key='address' id='address'
+              label='Address'
+              value={form.address}
+              valueLink={this._makeValueLink('address')} />
 
-        <button type='submit' onClick={this.handleSubmit} disabled={!formValid}>Submit</button>
+            <button type='submit' onClick={this.handleSubmit} disabled={!formValid}>Submit</button>
 
       </Form>
     );

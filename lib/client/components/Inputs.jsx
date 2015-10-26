@@ -92,12 +92,15 @@ export var Input = React.createClass({
         <input type={p.type || 'text'}
                id={p.id}
                name={p.id}
+               ref={p.id}
                placeholder={p.placeholder}
                maxLength={p.maxlength}
                title={d.validationErrors}
                valueLink={p.valueLink}
                onFocus={this.handleFocus}
-               onBlur={this.handleBlur}>
+               onBlur={this.handleBlur}
+               readOnly={this.props.readOnly}
+               className={this.props.className}>
         </input>
       </div>
     );
