@@ -5,7 +5,7 @@
   "repository": "github.com:dankennedy/testwebpack",
   "main": "lib/server/server.js",
   "scripts": {
-    "start": "npm run lint && NODE_PATH=lib NODE_ENV=development node lib/server/server.js --watch lib/server",
+    "start": "npm run lint && NODE_PATH=lib NODE_ENV=development node lib/server/server.js",
     "test": "npm run lint && NODE_PATH=lib NODE_ENV=development node_modules/.bin/mocha --compilers js:babel/register -u tdd",
     "build": "webpack -p -d --progress --colors",
     "lint": "node_modules/.bin/eslint .",
@@ -41,6 +41,8 @@
   },
   "dependencies": {
     "axios": "^0.7.0",
+    "bluebird": "^3.0.0",
+    "body-parser": "^1.14.1",
     "bunyan": "^1.4.0",
     "bunyan-prettystream": "^0.1.3",
     "express-bunyan-logger": "^1.1.1",
