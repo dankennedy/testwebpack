@@ -1,0 +1,17 @@
+
+.priceband-year {
+
+}
+.priceband-table {
+    margin-bottom: 40px;
+
+    thead tr:nth-of-type(1) th {
+        text-align: center;
+    }
+    thead tr th:nth-of-type(1) {
+        width: 20%;
+    }
+    tbody tr:nth-child(odd)       {
+        background-color:#eee;
+    }
+}

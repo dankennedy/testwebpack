@@ -198,6 +198,7 @@ let Book = React.createClass({
         });
         let bookingJson = this.formDataToBookingJson(),
             hasConflicts = BookingUtils.hasConflicts(bookingJson, this.state.existingBookings);
+
         return (
             <Form className={classNames('page-container booking-form')}
                     isValid={formValid}
