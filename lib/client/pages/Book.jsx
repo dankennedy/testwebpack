@@ -8,7 +8,6 @@ import axios from 'axios';
 import moment from 'moment';
 
 import validations from '../../shared/validations';
-import {classNames} from '../../shared/utils';
 import {BookingUtils} from '../../shared/bookings';
 import {Input, NumberInput} from '../components/Inputs';
 import Form from '../components/Form';
@@ -200,7 +199,7 @@ let Book = React.createClass({
             hasConflicts = BookingUtils.hasConflicts(bookingJson, this.state.existingBookings);
 
         return (
-            <Form className={classNames('page-container booking-form')}
+            <Form className='page-container booking-form'
                     isValid={formValid}
                     isDirty={formDirty}>
 

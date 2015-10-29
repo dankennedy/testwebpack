@@ -4,6 +4,7 @@ var webpack = require('webpack'),
     path = require('path');
 
 module.exports = {
+    devtool: 'source-map',
     entry: [
         'webpack/hot/only-dev-server',
         // The script refreshing the browser on none hot updates
@@ -46,7 +47,7 @@ module.exports = {
         //Options to jsx-loader https://github.com/petehunt/jsx-loader
     },
     plugins: [
-        //new webpack.NoErrorsPlugin(),
+        new webpack.NoErrorsPlugin(),
         new webpack.HotModuleReplacementPlugin()
     ]
 

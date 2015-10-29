@@ -1,5 +1,6 @@
 'use strict';
 import React from 'react';
+import _ from 'lodash';
 import axios from 'axios';
 
 let Prices = React.createClass({

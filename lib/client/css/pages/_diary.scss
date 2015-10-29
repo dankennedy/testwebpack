@@ -1,0 +1,77 @@
+$diary-back-color: #fff;
+$diary-busy-color: #c77966;
+
+.diary-key {
+    float: right;
+
+    .diary-key-entry {
+        display:block;
+        border: 1px solid $diary-busy-color;
+        border-radius: 4px;
+        padding: 4px;
+        margin: 10px 0;
+
+        .diary-key-cell {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+        }
+
+        .diary-key-desc {
+            margin-left: 10px;
+            margin-bottom: 20px;
+        }
+    }
+}
+
+.diary-month {
+    display:inline-table;
+    width: 230px;
+    height: 200px;
+    min-height: 200px;
+    margin-right: 50px;
+    margin-top: 20px;
+
+    th {
+        padding: 3px;
+    }
+    th,
+    td {
+        text-align: center;
+        padding: 5px 0;
+    }
+    td.notinmonth {
+        color: lightgray;
+    }
+    td.isbusy {
+        background-color: $diary-busy-color;
+        color: white;
+    }
+}
+
+td.arrivalday:not(.notinmonth),
+.diary-key-cell.arrival {
+    $svg-gradient-shim-threshold: 1 !global;
+    background: $diary-back-color;
+    @include background-image(linear-gradient(128deg, $diary-back-color 57%, $diary-busy-color 57%));
+}
+td.busyday:not(.notinmonth),
+.diary-key-cell.busy {
+    background-color: $diary-busy-color;
+}
+
+td.departureday:not(.notinmonth),
+.diary-key-cell.departure {
+    $svg-gradient-shim-threshold: 1 !global;
+    background: $diary-back-color;
+    @include background-image(linear-gradient(-43deg, $diary-back-color 47%, $diary-busy-color 47%));
+}
+
+td.arrivalday.departureday:not(.notinmonth),
+.diary-key-cell.changeover {
+    $svg-gradient-shim-threshold: 1 !global;
+    background: $diary-back-color;
+    @include background-image(linear-gradient(-43deg, $diary-busy-color 5%, $diary-back-color, $diary-busy-color));
+}
+
+
