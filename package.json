@@ -5,11 +5,15 @@
   "repository": "github.com:dankennedy/testwebpack",
   "main": "lib/server/server.js",
   "scripts": {
-    "start": "npm run lint && NODE_PATH=lib NODE_ENV=development node lib/server/server.js",
-    "test": "npm run lint && NODE_PATH=lib NODE_ENV=development node_modules/.bin/mocha --compilers js:babel/register -u tdd",
-    "build": "webpack -p -d --progress --colors",
-    "lint": "node_modules/.bin/eslint .",
-    "testwatch": "npm run lint && NODE_PATH=lib NODE_ENV=development node_modules/.bin/mocha --compilers js:babel/register -u tdd --reporter min --watch"
+    "lint": "eslint .",
+    "env": "NODE_PATH=lib NODE_ENV=development",
+    "predev": "npm run lint",
+    "pretest": "npm run lint && npm run env",
+    "pretestwatch": "npm run lint && npm run env",
+    "dev": "NODE_PATH=lib NODE_ENV=development node lib/server/server.js",
+    "test": "mocha --compilers js:babel/register -u tdd",
+    "testwatch": "mocha --compilers js:babel/register -u tdd --reporter min --watch",
+    "build": "webpack -p -d --progress --colors"
   },
   "author": "dankennedy",
   "license": "ISC",
@@ -49,6 +53,7 @@
     "lodash": "^3.9.3",
     "moment": "^2.10.3",
     "mongoose": "^4.2.2",
-    "react-date-picker": "^2.1.6"
+    "react-date-picker": "^2.1.6",
+    "react-swipeable": "^3.0.2"
   }
 }
