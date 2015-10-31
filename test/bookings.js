@@ -42,12 +42,12 @@ suite('Booking Utils', function() {
     suite('Booking', function() {
 
         test('should use numberOfNights and arrivalDate to calculate departureDate', function() {
-            assert(moment(new Date(2015, 0, 4, 10))
+            assert(moment(new Date(2015, 0, 4, 10, 30))
                 .isSame(new Booking({arrivalDate: new Date(2015, 0, 1), numberOfNights: 3}).getDepartureDate()));
         });
 
         test('should use numberOfNights and arrivalDate to calculate departureDate (feb crossover)', function() {
-            assert(moment(new Date(2015, 2, 2, 10))
+            assert(moment(new Date(2015, 2, 2, 10, 30))
                 .isSame(new Booking({arrivalDate: new Date(2015, 1, 25), numberOfNights: 5}).getDepartureDate()));
         });
 
@@ -58,11 +58,12 @@ suite('Booking Utils', function() {
 
         test('should use template and dates to create getSummaryDescription', function() {
             assert.equal(new Booking({arrivalDate: new Date(2015, 3, 14), numberOfNights: 5}).getSummaryDescription(),
-                'Arriving after 2pm on Tuesday 14th April staying for 5 nights. Leaving before 10am on Sunday 19th April.'
+                'Arriving after 2pm on Tuesday 14th April staying for 5 nights. Leaving before 10:30am on Sunday 19th April.'
                 );
         });
 
     });
+
     function getExistingBookings() {
         var bookings = [];
         for (var i = 0; i < 10; i++) {
