@@ -1,0 +1,21 @@
+.payment-table {
+    border: solid 1px #e3cda4;
+    border-collapse: separate;
+    width: 100%;
+}
+.payment-table td {
+    border: solid 1px #e3cda4;
+    padding: 10px;
+}
+.payment-table td.currency {
+    text-align: right;
+}
+.payment-table td.buttons {
+    width: 1%;
+}
+.payment-table tfoot td {
+    font-weight: bold;
+}
+.instruction-section {
+    margin-bottom: 1em;
+}

@@ -52,6 +52,7 @@
     "lodash": "^3.9.3",
     "moment": "^2.10.3",
     "mongoose": "^4.2.2",
+    "nodemailer": "^1.8.0",
     "react-date-picker": "^2.1.6",
     "react-swipeable": "^3.0.2"
   }

@@ -8,8 +8,10 @@ import ImageGallery from '../components/ImageGallery';
 let Gallery = React.createClass({
 
     getInitialState() {
-        return {images: []};
-    },
+            return {
+                images: []
+            };
+        },
 
     componentDidMount() {
         axios.get('/api/gallery').then(function(response) {
@@ -22,15 +24,13 @@ let Gallery = React.createClass({
     },
 
     render() {
-          return (
+        return (
             <ImageGallery
-              items={this.state.images}
-              autoPlay={true}
-              slideInterval={4000}/>
-          );
-      }
+          items={this.state.images}
+          autoPlay={true}
+          slideInterval={4000}/>
+        );
+    }
 });
 
 export default Gallery;
-
-
