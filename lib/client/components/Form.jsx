@@ -17,7 +17,8 @@ export default React.createClass({
     return(
       <form className={classNames('', {'invalid': this.props.isValid===false, 'isdirty': this.props.isDirty})}
             autoComplete={false}
-            onClick={this.props.onClick}>
+            onClick={this.props.onClick}
+            key={this.props.key}>
         {this.props.children}
       </form>
     );

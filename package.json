@@ -54,6 +54,7 @@
     "mongoose": "^4.2.2",
     "nodemailer": "^1.8.0",
     "react-date-picker": "^2.1.6",
+    "react-notify-toast": "0.0.3",
     "react-swipeable": "^3.0.2"
   }
 }

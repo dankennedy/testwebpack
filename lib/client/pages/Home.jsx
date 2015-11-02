@@ -42,7 +42,7 @@ let Home = React.createClass({
               <li>Wifi</li>
               <li>No pets (sorry)</li>
           </ul>
-          <Link className="large" to="book">Book Now</Link>
+          <Link className="large btn" to="book">Book Now</Link>
         </div>
 
         <div className="content-block">

@@ -129,8 +129,12 @@ suite('Booking Utils', function() {
             assert(!new Booking().hasUsedVoucher());
         });
 
-        test('getBalance checks for voucher', function() {
+        test('getBalance reduces price by deposit', function() {
             assert.equal(getBookingWithPayments(50, 20).getBalance(), 30);
+        });
+
+        test('getBalance ignores zero deposit', function() {
+            assert.equal(getBookingWithPayments(50, 0).getBalance(), 50);
         });
     });
 

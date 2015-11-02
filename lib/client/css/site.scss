@@ -1,148 +1,155 @@
-
 $visual-grid: false;
 $visual-grid-color: red;
 $visual-grid-index: front;
 $visual-grid-opacity: 0.1;
-
-
+$btn-color-main: #E06153;
+$btn-color-hover: #DC4D3D;
 @import "bourbon/bourbon";
 @import "base/base";
 @import "neat/neat";
 @import "pages/index";
-
 $mobile: new-breakpoint(max-width 500px 4);
 $tablet: new-breakpoint(max-width 768px 8);
 $desktop: new-breakpoint(min-width 850px);
-
 @for $i from 1 through 6 {
-  h#{$i} {
-    font-size: modular-scale((6 - $i), 1em, 1.2);
-  }
+    h#{$i} {
+        font-size: modular-scale((6 - $i), 1em, 1.2);
+    }
 }
 
 body {
-  margin: 0;
-  background-color: #fff;
+    margin: 0;
+    background-color: #fff;
 }
 
 .nav-wrapper {
-  background-color: #C77966;
-  height: 200px;
-  @include media($mobile) {
-    height: 140px;
-  }
-
+    background-color: #C77966;
+    height: 200px;
+    @include media($mobile) {
+        height: 140px;
+    }
 }
 
 .nav-row {
-  height: 100px;
-  background-color: #E3CDA4;
-  @include media($mobile) {
-    height: 50px;
-  }
-  img {
-    position:absolute;
-    left: 44%;
-    top: 10px;
+    height: 100px;
+    background-color: #E3CDA4;
     @include media($mobile) {
-      @include size(80px);
-      top: 10px;
-      left: 38%;
+        height: 50px;
     }
-  }
-  ul {
-      margin-top: 160px;
-      @include span-columns(10);
-      @include shift(1);
-
-      @include media($mobile) {
-        @include span-columns(5);
-        @include shift(0);
-        margin-top: 85px;
-      }
-    li {
-        @include span-columns(2 of 10);
+    img {
+        position: absolute;
+        left: 44%;
+        top: 10px;
         @include media($mobile) {
-          @include span-columns(1);
+            @include size(80px);
+            top: 10px;
+            left: 38%;
         }
-      a {
-          font-size: 22px;
-          color: whitesmoke;
-          padding: 0 20px;
-          display: block;
-          text-align: center;
-
-          @include media($mobile) {
-            font-size: 18px;
-          }
-      }
     }
-  }
+    ul {
+        margin-top: 160px;
+        @include span-columns(10);
+        @include shift(1);
+        @include media($mobile) {
+            @include span-columns(5);
+            @include shift(0);
+            margin-top: 85px;
+        }
+        li {
+            @include span-columns(2 of 10);
+            @include media($mobile) {
+                @include span-columns(1);
+            }
+            a {
+                font-size: 22px;
+                color: whitesmoke;
+                padding: 0 20px;
+                display: block;
+                text-align: center;
+                @include media($mobile) {
+                    font-size: 18px;
+                }
+            }
+        }
+    }
 }
 
-
 .content-wrapper {
-  @include outer-container;
+    @include outer-container;
 }
 
 .page-container {
-  @include span-columns(10);
-  @include shift(1);
-  padding-top: 30px;
-
-  @include media($tablet) {
-    @include shift(0);
-    padding: 20px;
-  }
+    @include span-columns(10);
+    @include shift(1);
+    padding-top: 30px;
+    @include media($tablet) {
+        @include shift(0);
+        padding: 20px;
+    }
 }
 
 .content-block {
-  @include span-columns(6);
-
-  @include media($tablet) {
-    @include span-columns(10);
-  }
+    @include span-columns(6);
+    @include media($tablet) {
+        @include span-columns(10);
+    }
 }
 
 .row {
-  @include outer-container;
+    @include outer-container;
 }
 
-
 .last {
-  @include omega;
+    @include omega;
 }
 
 #map-canvas {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  width: 480px;
-  height: 300px;
-  @include media($mobile) {
-    width: 280px;
-    height: 150px;
-  }
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 480px;
+    height: 300px;
+    @include media($mobile) {
+        width: 280px;
+        height: 150px;
+    }
 }
-
 
 #{$all-text-inputs} {
-  padding: 0.75em;
+    padding: 0.75em;
 }
+
 .formfield {
-  label {
-    cursor: pointer;
-  }
+    label {
+        cursor: pointer;
+    }
 }
+
 .formfield.isdirty.invalid {
-  input, select, textarea {
-    border-color: #CC0000;
-  }
+    input,
+    select,
+    textarea {
+        border-color: #CC0000;
+    }
 }
 
 #{$all-text-inputs-focus},
 #{$all-text-inputs-hover} {
-  box-shadow: 0px 1px 1px #C77966 outset;
-  border-color: #4C8F78;
-  transition: all 0.1s ease 0.1s, all 0.1s ease 0.1s;
+    box-shadow: 0px 1px 1px #C77966 outset;
+    border-color: #4C8F78;
+    transition: all 0.1s ease 0.1s, all 0.1s ease 0.1s;
+}
+
+button,
+.btn {
+    color: #fff;
+    background: $btn-color-main none repeat scroll 0% 0%;
+    transition: all 0.1s ease 0.1s, all 0.1s ease 0.1s;
+    display: inline-block;
+    cursor: pointer;
+}
+button:hover,
+.btn:hover {
+    color: #fff;
+    background: $btn-color-hover none repeat scroll 0% 0%;
 }

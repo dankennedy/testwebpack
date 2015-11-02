@@ -3,6 +3,7 @@
 import React from 'react';
 import axios from 'axios';
 import moment from 'moment';
+import {notify} from 'react-notify-toast';
 
 import {Booking} from '../../shared/bookings';
 import PaypalForm from '../components/PaypalForm';
@@ -16,20 +17,41 @@ let Pay = React.createClass({
     },
 
     componentDidMount() {
-        console.log('test');
-        axios.get('/api/bookings/' + this.props.params.bookingId).then(function(response) {
-            this.setState({
-                booking: new Booking(response.data)
+        this.getBooking();
+    },
+    getBooking() {
+        axios.get('/api/bookings/' + this.props.params.bookingId)
+            .then(function(response) {
+                this.setState({
+                    booking: new Booking(response.data)
+                });
+            }.bind(this)).catch(function(response) {
+                notify.show('Sorry. Failed to load that booking. Please check your link or email us.', 'error');
             });
-        }.bind(this)).catch(function(response) {
-            console.error(response);
-        });
+    },
+
+    handleApplyVoucher() {
+        let voucherCode = this.refs.voucherCode.getDOMNode().value;
+
+
+        if (!(/^[0-9a-fA-F]{24}$/).test(voucherCode)){
+           notify.show('Sorry, that voucher code is invalid.', 'warning');
+           return;
+        }
+
+        axios.put('/api/bookings/' + this.props.params.bookingId, {voucherCode: voucherCode})
+            .then(function(response) {
+                notify.show('Applied voucher', 'success');
+                this.getBooking();
+            }.bind(this)).catch(function(response) {
+                notify.show('Sorry. An error occurred applying that voucher.', 'error');
+            });
     },
 
     render() {
         let b = this.state.booking;
         if (!b.price)
-            return <div>Booking not found</div>;
+            return <div></div>;
 
         return (
             <div className='page-container'>
@@ -54,7 +76,7 @@ let Pay = React.createClass({
                         provisional until we receive
                         your deposit. If we don't receive the deposit within 14 days of booking we will
                         assume you have changed your mind and cancel it. You can use the links below
-                        to pay either the deposit or the full amount online immediately.</p>
+                        to pay either the deposit or the full amount online.</p>
                     }
                     {b.isDepositPaid() && !b.isBalancePaid() &&
                         <p>We have received your deposit already and your
@@ -78,8 +100,8 @@ let Pay = React.createClass({
                     <div className='instruction-section'>
                         <p>If you would prefer to pay by cheque then please write
                         your booking reference
-                        (<strong><em>{b._id}</em></strong>) on the back, make them payable to
-                        <strong><em>First Class Strategies Ltd</em></strong> and post them to<br/><br/>
+                        (<strong><em>{b._id}</em></strong>) on the back, make them payable
+                         to <strong><em>First Class Strategies Ltd</em></strong> and post them to<br/><br/>
                         <em>Thimble Cottage Admin<br/>
                         28 Hoyle Court Road<br/>
                         Baildon<br/>
@@ -90,32 +112,28 @@ let Pay = React.createClass({
                 }
 
                 {!b.isFullyPaid() && !b.hasUsedVoucher() &&
-                    <div className='instruction-section'>
-                        <p>If you have a voucher code you can enter it here to receive your discount.</p>
-                        <input type='text' />
-                        <button type='submit' />
+                    <div className='instruction-section voucher-section'>
+                        <p>If you have a voucher code you can enter it here.</p>
+                        <input type='text' placeholder='Paste voucher code here' ref='voucherCode' />
+                        <button type='submit' onClick={this.handleApplyVoucher}>Apply</button>
                     </div>
-                }
-
-                {b.hasUsedVoucher() &&
-                    <p>Voucher applied. {b.voucher.description}</p>
                 }
 
                 <table className='payment-table'>
                     <tbody>
                         {b.hasUsedVoucher() &&
                             <tr className='voucher-used'>
-                                <td>Voucher</td>
-                                <td/>
+                                <td className='payment-type'>Voucher</td>
+                                <td className='payment-amount'></td>
                                 <td>{b.voucher.description}</td>
-                                <td/>
+                                <td className='payment-type'></td>
                             </tr>
                         }
                         <tr>
-                            <td>Deposit</td>
-                            <td className='currency'>{b.deposit}</td>
+                            <td className='payment-type'>Deposit</td>
+                            <td className='payment-amount'>{b.deposit}</td>
                             <td>Due {b.getDepositDueDate().format('dddd Do MMMM')}</td>
-                            <td className='buttons'>
+                            <td className='payment-type'>
                                 {!b.isDepositPaid() &&
                                     <PaypalForm amount={b.deposit}
                                         description={'deposit'}
@@ -131,7 +149,7 @@ let Pay = React.createClass({
                         </tr>
                         <tr>
                             <td>Balance</td>
-                            <td className='currency'>{b.getBalance()}</td>
+                            <td className='payment-amount'>{b.getBalance()}</td>
                             <td>Due {b.getBalanceDueDate().format('dddd Do MMMM')}</td>
                             <td>
                                 {b.isDepositPaid() && !b.isBalancePaid() &&
@@ -150,7 +168,7 @@ let Pay = React.createClass({
                         {!b.isDepositPaid() && !b.isBalancePaid() &&
                             <tr>
                                 <td>Full Amount</td>
-                                <td className='currency'>{b.price}</td>
+                                <td className='payment-amount'>{b.price}</td>
                                 <td>Due {b.getBalanceDueDate().format('dddd Do MMMM')}</td>
                                 <td>
                                     <PaypalForm amount={b.price}
@@ -166,7 +184,7 @@ let Pay = React.createClass({
                     <tfoot>
                         <tr>
                             <td>Total</td>
-                            <td className='currency'>{b.price}</td>
+                            <td className='payment-amount'>{b.price}</td>
                             <td></td>
                             <td></td>
                         </tr>

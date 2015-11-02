@@ -3,9 +3,11 @@ import 'react-date-picker/index.css';
 import 'moment/locale/en-gb';
 
 import React from 'react';
+import Router from 'react-router';
 import _ from 'lodash';
 import axios from 'axios';
 import moment from 'moment';
+import {notify} from 'react-notify-toast';
 
 import validations from '../../shared/validations';
 import {BookingUtils} from '../../shared/bookings';
@@ -15,6 +17,7 @@ import Form from '../components/Form';
 var DatePicker = require('react-date-picker');
 
 let Book = React.createClass({
+    mixins : [Router.Navigation],
     getInitialState() {
         var state = {
             form: {
@@ -85,7 +88,7 @@ let Book = React.createClass({
                 existingBookings: response.data
             });
         }.bind(this)).catch(function(response) {
-            console.error(response);
+            notify.show('Failed to load existing bookings. You can continue but we\'ll have to check for conflicts when you submit', 'warn');
         });
         document.body.addEventListener('click', this.checkHideDatePicker);
     },
@@ -118,9 +121,9 @@ let Book = React.createClass({
     handleSubmit(e) {
         e.preventDefault();
         axios.post('/api/bookings', this.formDataToBookingJson()).then(function(response) {
-            console.log(response);
+            this.transitionTo('pay', {bookingId: response.data.id});
         }.bind(this)).catch(function(response) {
-            console.error(response);
+            notify.show('Sorry. We couldn\'t create your booking. Please try again', 'error');
         });
     },
     formDataToBookingJson() {
@@ -182,10 +185,14 @@ let Book = React.createClass({
             + 'arrivalDate=' + (data.arrivalDate.value && data.arrivalDate.value.toISOString())
             + '&numberOfNights=' + data.numberOfNights.value)
             .then(function(response) {
-                this.setState(response.data);
-        }.bind(this)).catch(function(response) {
-            console.error(response);
-        });
+                this.setState({
+                    price: response.data.price,
+                    hasConflicts: BookingUtils.hasConflicts(this.formDataToBookingJson(), this.state.existingBookings)
+                });
+                }.bind(this))
+            .catch(function(response) {
+                notify.show('Oops. Something went wrong trying to get a price. Please try again', 'error');
+            });
     },
     render() {
         let form = this.state.form;
@@ -195,13 +202,13 @@ let Book = React.createClass({
         let formDirty = _.some(form, function(el) {
             return el.isdirty;
         });
-        let bookingJson = this.formDataToBookingJson(),
-            hasConflicts = BookingUtils.hasConflicts(bookingJson, this.state.existingBookings);
+        let hasConflicts = this.state.hasConflicts;
 
         return (
             <Form className='page-container booking-form'
                     isValid={formValid}
-                    isDirty={formDirty}>
+                    isDirty={formDirty}
+                    key={'BookForm'}>
 
                 <div className='row'>
                     <div className='split-controls'>
@@ -239,8 +246,19 @@ let Book = React.createClass({
 
                     </div>
                     <div className='split-bookingdescription'>
-                        <p>{hasConflicts ? 'Conflicts with existing bookings' : BookingUtils.getSummaryDescription(bookingJson)}</p>
-                        <p>{!hasConflicts && this.state.price ? ('Price: £' + this.state.price) : ''}</p>
+                        {hasConflicts &&
+                                <p>
+                                    This date/number of nights conflicts with existing bookings.<br/>
+                                    You can select an alternative or check our availability to see
+                                    which dates are available.
+                                </p>
+                        }
+                        {!hasConflicts && this.state.price &&
+                                <p>
+                                    {BookingUtils.getSummaryDescription(this.formDataToBookingJson())}<br/>
+                                    Price: £{this.state.price}
+                                </p>
+                        }
                     </div>
                 </div>
                 <Input
