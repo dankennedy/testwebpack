@@ -205,7 +205,8 @@ let Book = React.createClass({
         let hasConflicts = this.state.hasConflicts;
 
         return (
-            <Form className='page-container booking-form'
+            <div className='page-container'>
+            <Form className='booking-form'
                     isValid={formValid}
                     isDirty={formDirty}
                     key={'BookForm'}>
@@ -317,7 +318,8 @@ let Book = React.createClass({
                     disabled={!formValid || hasConflicts}>
                     Submit
                 </button>
-            </Form>);
+            </Form>
+            </div>);
     }
 });
 export default Book;

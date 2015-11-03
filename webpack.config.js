@@ -7,13 +7,12 @@ module.exports = {
     devtool: 'source-map',
     entry: [
         'webpack/hot/only-dev-server',
-        // The script refreshing the browser on none hot updates
         'webpack-dev-server/client?http://localhost:8080',
-        './lib/client/app.js'
+        './lib/client/main.js'
     ],
     output: {
         devtool: '#eval-source-map',
-        path: __dirname + '/public/build',
+        path: __dirname + '/views/build',
         filename: 'bundle.js',
         publicPath: '/build/'
     },
