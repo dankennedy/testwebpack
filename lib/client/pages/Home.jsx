@@ -37,6 +37,7 @@ let Home = React.createClass({
               <li>Kitchenette with oven and microwave</li>
               <li>Fridge freezer</li>
               <li>Bed linen provided</li>
+              <li>You will need to bring your own towels</li>
               <li>Central heating</li>
               <li>Smart TV &amp; DVD</li>
               <li>Wifi</li>

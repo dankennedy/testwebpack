@@ -6,7 +6,7 @@ import axios from 'axios';
 import moment from 'moment';
 
 import {classNames} from '../../shared/utils';
-import {BookingUtils} from '../../shared/bookings';
+import {Booking, BookingUtils} from '../../shared/bookings';
 
 let Diary = React.createClass({
 
@@ -19,7 +19,9 @@ let Diary = React.createClass({
     componentDidMount() {
         axios.get('/api/bookings').then(function(response) {
             this.setState({
-                bookings: response.data
+                bookings: _.map(response.data, function(b) {
+                    return new Booking(b);
+                })
             });
         }.bind(this)).catch(function(response) {
             console.error(response);
@@ -34,7 +36,6 @@ let Diary = React.createClass({
         let yearNodes = _.map([moment().startOf('month'), moment().add(1, 'years').startOf('year')], m => {
             return <DiaryYear
                         startMoment={m}
-                        key={m.get('year')}
                         handleGetDateState={this.getDateState} />;
         });
 
@@ -82,7 +83,6 @@ let DiaryYear = React.createClass({
         for (var m = moment(start); m < end; m.add(1, 'months')) {
             monthNodes.push(<DiaryMonth
                                 startMoment={moment(m)}
-                                key={m.toISOString()}
                                 handleGetDateState={this.props.handleGetDateState} />);
         }
 
@@ -115,7 +115,6 @@ let DiaryMonth = React.createClass({
             for (var i = 0; i < 7; i++) {
                 let diaryDate = moment(m).add(i, 'days');
                 dayNodes.push(<DiaryDay
-                    key={weekStart.toISOString() + '-' + diaryDate.toISOString()}
                     date={diaryDate}
                     month={start}
                     handleGetDateState={this.props.handleGetDateState} />);
