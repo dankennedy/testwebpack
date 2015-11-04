@@ -3,6 +3,9 @@ node_modules
 build
 log
 public/build
+public/*.html
+public/*.js
+public/*.map
 bundle.js
 *.map
 .DS_Store

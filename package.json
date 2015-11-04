@@ -5,15 +5,17 @@
   "repository": "github.com:dankennedy/testwebpack",
   "main": "lib/server/server.js",
   "scripts": {
+    "cleanbuild": "rm -f ./public/*.html && rm -f ./public/main.*",
     "lint": "eslint .",
-    "predev": "npm run lint",
+    "predev": "npm run lint && npm run cleanbuild",
+    "builddev": "npm run lint && npm run cleanbuild",
     "pretest": "npm run lint",
     "pretestwatch": "npm run lint",
     "start": "NODE_PATH=lib NODE_ENV=production node lib/server/server.js",
     "dev": "NODE_PATH=lib NODE_ENV=development node lib/server/server.js",
     "test": "NODE_PATH=lib NODE_ENV=development mocha --compilers js:babel/register -u tdd",
     "testwatch": "NODE_PATH=lib NODE_ENV=development mocha --compilers js:babel/register -u tdd --reporter min --watch",
-    "build": "webpack -p -d --progress --colors"
+    "build": "rm -rf ./public/build && webpack -p -d --progress --colors --config=./webpack.prod.config.js"
   },
   "author": "dankennedy",
   "license": "MIT",

@@ -5,35 +5,33 @@ var webpack = require('webpack'),
     HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-    devtool: 'eval-source-map',
     entry: {
         main: [
-            'webpack/hot/only-dev-server',
-            'webpack-dev-server/client?http://localhost:8080',
             path.join(__dirname, 'lib', 'client', 'main.js')
         ]
     },
     output: {
-        path: path.join(__dirname, 'public', 'build'),
-        publicPath: '/build/',
+        path: path.join(__dirname, 'public'),
+        publicPath: '',
         filename: '[name].[hash].js'
     },
     resolve: {
-        'extensions': [
+        extensions: [
             '',
             '.js',
             '.jsx'
+        ],
+        modulesDirectories: [
+            'node_modules'
         ]
     },
     module: {
         preLoaders: [{
             test: /\.jsx?/,
-            exclude: /node_modules/,
             loader: 'eslint'
         }],
         loaders: [{
             test: /(\.js|\.jsx)?$/,
-            exclude: /node_modules/,
             loader: 'babel',
         }, {
             test: /\.(css|scss)$/,
@@ -48,8 +46,17 @@ module.exports = {
             template: './views/layout.html',
             inject: 'body'
         }),
-        new webpack.NoErrorsPlugin(),
-        new webpack.HotModuleReplacementPlugin()
+        new webpack.optimize.DedupePlugin(),
+        new webpack.optimize.OccurrenceOrderPlugin(true),
+        new webpack.optimize.UglifyJsPlugin({
+            mangle: true,
+            output: {
+                comments: false
+            },
+            compress: {
+                warnings: false
+            }
+        })
     ]
 
 };
