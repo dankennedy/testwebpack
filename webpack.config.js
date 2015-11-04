@@ -1,7 +1,8 @@
 'use strict';
 
 var webpack = require('webpack'),
-    path = require('path');
+    path = require('path'),
+    HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     devtool: 'eval-source-map',
@@ -13,9 +14,9 @@ module.exports = {
         ]
     },
     output: {
-        path: path.join(__dirname, 'build'),
+        path: path.join(__dirname, 'public', 'build'),
         publicPath: '/build/',
-        filename: '[name].js'
+        filename: '[name].[hash].js'
     },
     resolve: {
         'extensions': [
@@ -40,13 +41,13 @@ module.exports = {
         }, {
             test: /\.(png|jpg|jpeg|gif)$/,
             loader: 'url?limit=8192'
-        }],
-        postLoaders: []
-    },
-    jsx: {
-        //Options to jsx-loader https://github.com/petehunt/jsx-loader
+        }]
     },
     plugins: [
+        new HtmlWebpackPlugin({
+            template: './views/layout.html',
+            inject: 'body'
+        }),
         new webpack.NoErrorsPlugin(),
         new webpack.HotModuleReplacementPlugin()
     ]
