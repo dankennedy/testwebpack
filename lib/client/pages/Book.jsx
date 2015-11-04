@@ -202,7 +202,7 @@ let Book = React.createClass({
         let formDirty = _.some(form, function(el) {
             return el.isdirty;
         });
-        let hasConflicts = this.state.hasConflicts;
+        let hasConflicts = this.state.hasConflicts || false;
 
         return (
             <div className='page-container'>
