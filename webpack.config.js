@@ -1,19 +1,20 @@
 'use strict';
 
-var webpack = require('webpack'),
-    path = require('path');
+var webpack = require('webpack');
 
 module.exports = {
     devtool: 'source-map',
-    entry: [
-        'webpack/hot/only-dev-server',
-        'webpack-dev-server/client?http://localhost:8080',
-        './lib/client/main.js'
-    ],
+    entry: {
+        main: [
+            'webpack/hot/only-dev-server',
+            'webpack-dev-server/client?http://localhost:8080',
+            __dirname + '/lib/client/main.js'
+        ]
+    },
     output: {
         devtool: '#eval-source-map',
-        path: __dirname + '/views/build',
-        filename: 'bundle.js',
+        path: __dirname + '/build',
+        filename: '[name].js',
         publicPath: '/build/'
     },
     resolve: {
@@ -26,7 +27,7 @@ module.exports = {
     module: {
         preLoaders: [{
             test: /\.jsx?/,
-            exclude: __dirname + '/node_modules',
+            exclude: /node_modules/,
             loader: 'eslint'
         }],
         loaders: [{
@@ -35,7 +36,7 @@ module.exports = {
             exclude: /node_modules/
         }, {
             test: /\.(css|scss)$/,
-            loader: 'style!css!sass?outputStyle=expanded&includePaths[]=' + (path.resolve(__dirname, './css')),
+            loader: 'style!css!sass?outputStyle=expanded&includePaths[]=' + (__dirname + '/lib/client/css'),
         }, {
             test: /\.(png|jpg|jpeg|gif)$/,
             loader: 'url?limit=8192'
