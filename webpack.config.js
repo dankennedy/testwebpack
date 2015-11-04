@@ -27,18 +27,18 @@ module.exports = {
         preLoaders: [{
             test: /\.jsx?/,
             exclude: __dirname + '/node_modules',
-            loader: 'eslint-loader'
+            loader: 'eslint'
         }],
         loaders: [{
             test: /(\.js|\.jsx)?$/,
-            loaders: ['react-hot', 'babel'],
+            loaders: ['babel'],
             exclude: /node_modules/
         }, {
             test: /\.(css|scss)$/,
             loader: 'style!css!sass?outputStyle=expanded&includePaths[]=' + (path.resolve(__dirname, './css')),
         }, {
             test: /\.(png|jpg|jpeg|gif)$/,
-            loader: 'url-loader?limit=8192'
+            loader: 'url?limit=8192'
         }],
         postLoaders: []
     },
