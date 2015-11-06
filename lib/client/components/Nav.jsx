@@ -2,7 +2,8 @@
 
 import React from 'react';
 import { Link } from 'react-router';
-const logo = require('../img/header_logo.png');
+const logo = 'images/header_logo.png';
+
 let Nav = React.createClass({
 
   render() {

@@ -1,7 +1,8 @@
 'use strict';
 
 var webpack = require('webpack'),
-    path = require('path');
+    path = require('path'),
+    ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
     devtool: 'eval-source-map',
@@ -38,13 +39,14 @@ module.exports = {
             loader: 'babel',
         }, {
             test: /\.(css|scss)$/,
-            loader: 'style!css!sass?outputStyle=expanded&includePaths[]=' + path.join(__dirname, 'lib', 'client', 'css'),
+            loader: ExtractTextPlugin.extract('css?sourceMap!sass?sourceMap'),
         }, {
             test: /\.(png|jpg|jpeg|gif)$/,
             loader: 'url?limit=8192'
         }]
     },
     plugins: [
+        new ExtractTextPlugin('styles.css'),
         new webpack.NoErrorsPlugin(),
         new webpack.HotModuleReplacementPlugin()
     ]

@@ -1,5 +1,4 @@
 'use strict';
-import 'react-date-picker/index.css';
 import 'moment/locale/en-gb';
 
 import React from 'react';
