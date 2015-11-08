@@ -40,15 +40,15 @@ module.exports = {
         }, {
             test: /\.(css|scss)$/,
             loader: ExtractTextPlugin.extract('css?sourceMap!sass?sourceMap'),
-        }, {
-            test: /\.(png|jpg|jpeg|gif)$/,
-            loader: 'url?limit=8192'
         }]
     },
     plugins: [
-        new ExtractTextPlugin('styles.css'),
         new webpack.NoErrorsPlugin(),
-        new webpack.HotModuleReplacementPlugin()
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.DefinePlugin({
+          _environment_: JSON.stringify(process.env.NODE_ENV || 'development'),
+        }),
+        new ExtractTextPlugin('styles.css')
     ]
 
 };

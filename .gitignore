@@ -3,8 +3,9 @@ node_modules
 build
 log
 public/build
-public/*.html
+public/*.tmpl
 public/*.js
+public/*.css
 public/*.map
 bundle.js
 *.map

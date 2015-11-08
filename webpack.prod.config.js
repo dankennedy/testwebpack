@@ -2,7 +2,8 @@
 
 var webpack = require('webpack'),
     path = require('path'),
-    HtmlWebpackPlugin = require('html-webpack-plugin');
+    HtmlWebpackPlugin = require('html-webpack-plugin'),
+    ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
     entry: {
@@ -35,16 +36,15 @@ module.exports = {
             loader: 'babel',
         }, {
             test: /\.(css|scss)$/,
-            loader: 'style!css!sass?outputStyle=expanded&includePaths[]=' + path.join(__dirname, 'lib', 'client', 'css'),
-        }, {
-            test: /\.(png|jpg|jpeg|gif)$/,
-            loader: 'url?limit=8192'
+            loader: ExtractTextPlugin.extract('css!sass'),
         }]
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: './views/layout.html',
-            inject: 'body'
+            template: './views/production.tmpl',
+            inject: 'body',
+            minify: {collapseWhitespace: true},
+            filename: 'index.tmpl'
         }),
         new webpack.optimize.DedupePlugin(),
         new webpack.optimize.OccurrenceOrderPlugin(true),
@@ -56,7 +56,11 @@ module.exports = {
             compress: {
                 warnings: false
             }
-        })
+        }),
+        new webpack.DefinePlugin({
+          _environment_: JSON.stringify(process.env.NODE_ENV || 'production'),
+        }),
+        new ExtractTextPlugin('styles.[hash].css')
     ]
 
 };
