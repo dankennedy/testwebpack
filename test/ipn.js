@@ -2,8 +2,7 @@
 
 import assert from 'assert';
 var log = require('server/log'),
-    ipn = require('server/ipn')({post: function() {}}, log),
-    qs = require('querystring');
+    ipn = require('server/ipn')({post: function() {}}, log);
 
 suite('IPN', function() {
 

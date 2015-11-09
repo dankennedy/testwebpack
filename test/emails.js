@@ -1,7 +1,7 @@
 'use strict';
 
 import assert from 'assert';
-import emails from 'server/emails.js';
+import emails from 'server/emails';
 
 suite('Emails', function() {
 
