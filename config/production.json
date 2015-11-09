@@ -1,4 +1,6 @@
 {
-  "logging": {
+    "logging": {},
+    "email": {
+        "sendenabled": true
     }
 }

@@ -7,7 +7,8 @@
     },
     "email": {
         "from": "Thimble Cottage Whitby <bookings@thimblecottagewhitby.co.uk>",
-        "bcc":  "bookings@thimblecottagewhitby.co.uk"
+        "bcc":  "bookings@thimblecottagewhitby.co.uk",
+        "sendingenabled": false
     },
     "paymentlink": "http://www.thimblecottagewhitby.co.uk/app/pay/"
 }
