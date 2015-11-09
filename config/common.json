@@ -4,5 +4,10 @@
         "stdout": "info",
         "default": "log/app.log",
         "error": "log/error.log"
-    }
+    },
+    "email": {
+        "from": "Thimble Cottage Whitby <bookings@thimblecottagewhitby.co.uk>",
+        "bcc":  "bookings@thimblecottagewhitby.co.uk"
+    },
+    "paymentlink": "http://www.thimblecottagewhitby.co.uk/app/pay/"
 }
