@@ -1,8 +1,7 @@
 'use strict';
 
 var webpack = require('webpack'),
-    path = require('path'),
-    ExtractTextPlugin = require('extract-text-webpack-plugin');
+    path = require('path');
 
 module.exports = {
     devtool: 'eval-source-map',
@@ -39,7 +38,7 @@ module.exports = {
             loader: 'babel',
         }, {
             test: /\.(css|scss)$/,
-            loader: ExtractTextPlugin.extract('css?sourceMap!sass?sourceMap'),
+            loader: 'style!css!sass?outputStyle=expanded&includePaths[]=' + path.join(__dirname, 'lib', 'client', 'css'),
         }]
     },
     plugins: [
@@ -47,8 +46,7 @@ module.exports = {
         new webpack.HotModuleReplacementPlugin(),
         new webpack.DefinePlugin({
           _environment_: JSON.stringify(process.env.NODE_ENV || 'development'),
-        }),
-        new ExtractTextPlugin('styles.css')
+        })
     ]
 
 };
