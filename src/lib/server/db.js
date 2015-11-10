@@ -37,7 +37,7 @@ module.exports = function(config, log) {
         log.info('db: Connecting to ' + config.env + ' instance');
 
         if (!config.isProduction) {
-            mongoose.connect('localhost', 'tcwhitby', options);
+            mongoose.connect('db', 'tcwhitby', options);
         } else {
             mongoose.connect('mongodb://' + config.dbUser + ':' + config.dbPwd + '@ds057538.mongolab.com:57538/tcwhitby', options);
         }
