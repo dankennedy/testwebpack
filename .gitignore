@@ -7,3 +7,4 @@ src/public/*.js
 src/public/*.css
 *.map
 .DS_Store
+.env

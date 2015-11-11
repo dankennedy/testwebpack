@@ -7,7 +7,8 @@ var express = require('express'),
     app = express(),
     config = require('server/config'),
     hbs = require('express-handlebars'),
-    path = require('path');
+    path = require('path'),
+    cluster = require('cluster');
 
 process.env.TZ = 'UTC';
 app.engine('tmpl', hbs({
@@ -40,7 +41,7 @@ app.use(function(req, res, next) {
 
 app.use(log.errorLog());
 
-if (!config.isProduction) {
+if (!config.isProduction && cluster.isMaster) {
 
     var bundle = require('server/makebundle');
     bundle(log, config);
@@ -64,17 +65,44 @@ if (!config.isProduction) {
     });
 }
 
-require('server/router')(app, config);
+if (cluster.isMaster) {
 
-app.use(fileNotFound);
+    // start at least 2 workers up to number of CPUs
+    var numCPUs = require('os').cpus().length;
+    numCPUs = numCPUs <= 1 ? 2 : numCPUs;
 
-var db = require('server/db')(config, log);
-db.startup();
+    log.info('server: cluster master starting', numCPUs, 'workers');
 
-app.listen(config.port, function() {
-    log.info('server: Listening on port %d in %s mode', config.port, app.get('env'));
-    log.info('server: Nodejs version ' + process.version);
-});
+    for (var i = 0; i < numCPUs; i++) {
+        cluster.fork();
+    }
+
+    cluster.on('exit', function(worker, code, signal) {
+        log.warn('worker', worker.process.pid, 'died. restarting..');
+        cluster.fork();
+    });
+
+    cluster.on('online', function(worker) {
+        log.info('server: cluster worker online', worker.id);
+    });
+
+    cluster.on('disconnect', function(worker) {
+        log.info('server: cluster worker disconnected', worker.id);
+    });
+
+} else {
+    var db = require('server/db')(config, log);
+    db.startup();
+
+    require('server/router')(app, config);
+
+    app.use(fileNotFound);
+
+    app.listen(config.port, function() {
+        log.info('server: Listening on port %d in %s mode', config.port, app.get('env'));
+        log.info('server: Nodejs version ' + process.version);
+    });
+}
 
 process.on('uncaughtException', function(err) {
     log.error(err);

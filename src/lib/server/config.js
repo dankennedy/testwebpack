@@ -32,7 +32,7 @@ function initConfig(env) {
   config.dbUser = process.env.DBUSR;
   config.dbPwd = process.env.DBPWD;
   config.email.smtpUser = process.env.SMTPUSR;
-  config.email.smtpPwd = process.env.SMTPUSR;
+  config.email.smtpPwd = process.env.SMTPPWD;
 
   return config;
 }

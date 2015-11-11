@@ -27,8 +27,8 @@ module.exports = function(config, log) {
             },
             server: {
                 socketOptions: {
-                    keepAlive: 1,
-                    connectTimeoutMS: 5000
+                    keepAlive: 10,
+                    connectTimeoutMS: 10000
                 },
                 auto_reconnect: true
             }

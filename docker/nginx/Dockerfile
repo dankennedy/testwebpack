@@ -1,3 +1,5 @@
 FROM nginx
 
-ADD sites.conf /etc/nginx/conf.d/sites.conf
+RUN rm -f /etc/nginx/*.conf
+RUN rm -f /etc/nginx/conf.d/*.conf
+ADD nginx.conf /etc/nginx/nginx.conf
