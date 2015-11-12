@@ -217,7 +217,6 @@ let Book = React.createClass({
                             key='arrivalDate'
                             id='arrivalDate'
                             label='Arrival Date'
-                            type='date'
                             value={form.arrivalDate}
                             placeholder='Click to select'
                             readOnly={true}

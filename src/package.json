@@ -7,7 +7,7 @@
   "scripts": {
     "cleanbuild": "rm -f ./public/*.*",
     "lint": "eslint .",
-    "prebuild": "npm run lint && npm run cleanbuild",
+    "prebuild": "npm run cleanbuild",
     "predev": "npm run lint && npm run cleanbuild",
     "pretest": "npm run lint",
     "pretestwatch": "npm run lint",

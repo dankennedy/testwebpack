@@ -41,7 +41,7 @@ app.use(function(req, res, next) {
 
 app.use(log.errorLog());
 
-if (!config.isProduction && cluster.isMaster) {
+if (!config.isProduction) {
 
     var bundle = require('server/makebundle');
     bundle(log, config);
@@ -65,7 +65,7 @@ if (!config.isProduction && cluster.isMaster) {
     });
 }
 
-if (cluster.isMaster) {
+if (cluster.isMaster && config.isProduction) {
 
     // start at least 2 workers up to number of CPUs
     var numCPUs = require('os').cpus().length;
