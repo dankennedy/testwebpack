@@ -1,6 +1,6 @@
 'use strict';
 
-require('babel/register');
+require('babel-core/register');
 
 var express = require('express'),
     bodyParser = require('body-parser'),

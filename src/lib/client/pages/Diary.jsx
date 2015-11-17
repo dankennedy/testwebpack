@@ -8,13 +8,14 @@ import moment from 'moment';
 import {classNames} from '../../shared/utils';
 import {Booking, BookingUtils} from '../../shared/bookings';
 
-let Diary = React.createClass({
+export default class Diary extends React.Component {
 
-    getInitialState() {
-        return {
+    constructor(props) {
+        super(props);
+        this.state = {
             bookings: []
         };
-    },
+    }
 
     componentDidMount() {
         axios.get('/api/bookings').then(function(response) {
@@ -26,17 +27,18 @@ let Diary = React.createClass({
         }.bind(this)).catch(function(response) {
             console.error(response);
         });
-    },
+    }
 
-    getDateState(dt) {
+    getDateState = (dt) => {
         return BookingUtils.getDateState(dt, this.state.bookings);
-    },
+    }
 
     render() {
         let yearNodes = _.map([moment().startOf('month'), moment().add(1, 'years').startOf('year')], m => {
             return <DiaryYear
                         startMoment={m}
-                        handleGetDateState={this.getDateState} />;
+                        handleGetDateState={this.getDateState}
+                        key={m.get('year')} />;
         });
 
         return(
@@ -46,9 +48,9 @@ let Diary = React.createClass({
             </div>
         );
     }
-});
+};
 
-let DiaryKey = React.createClass({
+class DiaryKey extends React.Component {
 
     render() {
         let keyNodes = _.map([
@@ -57,7 +59,7 @@ let DiaryKey = React.createClass({
             {class:'departure', desc:'Departure'},
             {class:'busy', desc:'Booked'}],
             k => {
-                return <div className='diary-key-entry'>
+                return <div className='diary-key-entry' key={k.class}>
                     <span className={classNames('diary-key-cell ' + k.class)}></span>
                     <span className='diary-key-desc'>{k.desc}</span>
                 </div>;
@@ -70,9 +72,9 @@ let DiaryKey = React.createClass({
             </div>
         );
     }
-});
+};
 
-let DiaryYear = React.createClass({
+class DiaryYear extends React.Component {
 
     render() {
         let start = this.props.startMoment,
@@ -83,7 +85,8 @@ let DiaryYear = React.createClass({
         for (var m = moment(start); m < end; m.add(1, 'months')) {
             monthNodes.push(<DiaryMonth
                                 startMoment={moment(m)}
-                                handleGetDateState={this.props.handleGetDateState} />);
+                                handleGetDateState={this.props.handleGetDateState}
+                                key={m.get('month')} />);
         }
 
         return (
@@ -93,9 +96,9 @@ let DiaryYear = React.createClass({
             </div>
         );
     }
-});
+};
 
-let DiaryMonth = React.createClass({
+class DiaryMonth extends React.Component {
 
     render() {
 
@@ -115,6 +118,7 @@ let DiaryMonth = React.createClass({
             for (var i = 0; i < 7; i++) {
                 let diaryDate = moment(m).add(i, 'days');
                 dayNodes.push(<DiaryDay
+                    key={diaryDate}
                     date={diaryDate}
                     month={start}
                     handleGetDateState={this.props.handleGetDateState} />);
@@ -141,9 +145,9 @@ let DiaryMonth = React.createClass({
             </table>
         );
     }
-});
+};
 
-let DiaryDay = React.createClass({
+class DiaryDay extends React.Component {
 
     render() {
         let d = this.props.date,
@@ -160,8 +164,4 @@ let DiaryDay = React.createClass({
             </td>
         );
     }
-});
-
-export default Diary;
-
-
+};

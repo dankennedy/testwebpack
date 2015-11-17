@@ -1,8 +1,7 @@
 'use strict';
 
 import React from 'react';
-import { RouteHandler } from 'react-router';
-import Notifications from 'react-notify-toast';
+import Notifications from './components/Notify';
 import Nav from './components/Nav';
 
 export default class App extends React.Component {
@@ -12,7 +11,7 @@ export default class App extends React.Component {
         <Nav />
         <Notifications />
         <div className="content-wrapper">
-          <RouteHandler/>
+          {this.props.children}
         </div>
       </div>
     );

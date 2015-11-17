@@ -5,13 +5,13 @@ import axios from 'axios';
 
 import ImageGallery from '../components/ImageGallery';
 
-let Gallery = React.createClass({
-
-    getInitialState() {
-            return {
-                images: []
-            };
-        },
+export default class Gallery extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            images: []
+        };
+    }
 
     componentDidMount() {
         axios.get('/api/gallery').then(function(response) {
@@ -21,16 +21,11 @@ let Gallery = React.createClass({
         }.bind(this)).catch(function(response) {
             console.error(response);
         });
-    },
+    }
 
     render() {
         return (
-            <ImageGallery
-          items={this.state.images}
-          autoPlay={true}
-          slideInterval={4000}/>
+            <ImageGallery items={this.state.images} autoPlay={true} slideInterval={4000}/>
         );
     }
-});
-
-export default Gallery;
+};

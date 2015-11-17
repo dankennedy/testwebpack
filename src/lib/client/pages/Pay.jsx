@@ -8,17 +8,19 @@ import {notify} from 'react-notify-toast';
 import {Booking} from '../../shared/bookings';
 import PaypalForm from '../components/PaypalForm';
 
-let Pay = React.createClass({
+export default class Pay extends React.Component {
 
-    getInitialState() {
-        return {
+    constructor(props) {
+        super(props);
+        this.state = {
             booking: {}
         };
-    },
+    }
 
     componentDidMount() {
         this.getBooking();
-    },
+    }
+
     getBooking() {
         axios.get('/api/bookings/' + this.props.params.bookingId)
             .then(function(response) {
@@ -28,7 +30,7 @@ let Pay = React.createClass({
             }.bind(this)).catch(function(response) {
                 notify.show('Sorry. Failed to load that booking. Please check your link or email us.', 'error');
             });
-    },
+    }
 
     handleApplyVoucher() {
         let voucherCode = this.refs.voucherCode.getDOMNode().value;
@@ -46,7 +48,7 @@ let Pay = React.createClass({
             }.bind(this)).catch(function(response) {
                 notify.show('Sorry. An error occurred applying that voucher.', 'error');
             });
-    },
+    }
 
     render() {
         let b = this.state.booking;
@@ -192,6 +194,4 @@ let Pay = React.createClass({
                 </table>
             </div>);
     }
-});
-
-export default Pay;
+};

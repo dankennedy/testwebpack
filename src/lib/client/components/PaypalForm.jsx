@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-let PaypalForm = React.createClass({
+export default class PaypalForm extends React.Component {
 
     render() {
         return (
@@ -27,6 +27,4 @@ let PaypalForm = React.createClass({
         );
 
     }
-});
-
-export default PaypalForm;
+};

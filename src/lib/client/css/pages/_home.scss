@@ -1,7 +1,13 @@
-.large{
-  margin: 20px 0;
-  font-size: 3em;
-  padding: 7px 14px;
-  border-radius: 3px;
-  border: medium none;
+.large {
+    margin: 20px 0;
+    font-size: 3em;
+    padding: 7px 14px;
+    border-radius: 3px;
+    border: medium none;
+}
+
+.map-container {
+    width: 400px;
+    height: 400px;
+    display: -webkit-flex;
 }

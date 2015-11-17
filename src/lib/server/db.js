@@ -36,10 +36,10 @@ module.exports = function(config, log) {
 
         log.info('db: Connecting to ' + config.env + ' instance');
 
-        if (!config.isProduction) {
-            mongoose.connect('192.168.99.100', 'tcwhitby', options);
-        } else {
+        if (config.isProduction) {
             mongoose.connect('mongodb://' + config.dbUser + ':' + config.dbPwd + '@ds057538.mongolab.com:57538/tcwhitby', options);
+        } else {
+            mongoose.connect('192.168.99.100', 'tcwhitby', options);
         }
 
     };

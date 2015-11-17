@@ -1,8 +1,7 @@
 'use strict';
 
 import React from 'react';
-import Router from 'react-router';
-import { Route } from 'react-router';
+import { Route, IndexRoute } from 'react-router';
 
 import App from './App';
 import Home from './pages/Home';
@@ -12,19 +11,17 @@ import Gallery from './pages/Gallery';
 import Prices from './pages/Prices';
 import Pay from './pages/Pay';
 
-let DefaultRoute = Router.DefaultRoute,
-    NotFoundRoute = Router.NotFoundRoute,
-    routes = (
-  <Route name="app" path="/" handler={App}>
-      <Route name="home" path="home" handler={Home} />
-      <Route name="book" path="book" handler={Book} />
-      <Route name="diary" path="diary" handler={Diary} />
-      <Route name="gallery" path="gallery" handler={Gallery} />
-      <Route name="prices" path="prices" handler={Prices} />
-      <Route name="pay" path="pay/:bookingId" handler={Pay} />
+const routes = (
+  <Route path="/" component={App}>
+      <IndexRoute component={Home} />
+      <Route path="home" component={Home} />
+      <Route path="book" component={Book} />
+      <Route path="gallery" component={Gallery} />
+      <Route path="diary" component={Diary} />
+      <Route path="prices" component={Prices} />
+      <Route path="pay/:bookingId" component={Pay} />
 
-      <DefaultRoute handler={Home} />
-      <NotFoundRoute handler={Home} />
+      <Route path="*" component={Home} />
   </Route>
 );
 

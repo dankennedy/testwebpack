@@ -4,90 +4,98 @@ import React from 'react';
 import {classNames} from '../../shared/utils';
 import Validations from '../../shared/validations';
 
-var InputMixin = {
-  getDefaultProps() {
-    return {id: '', validations: [], handleChildChange: function(){}};
-  },
-  getInitialState() {
-    return {
-      value: this.props.value,
-      initialValue: this.props.value,
-      isValid: true,
-      validationMessage: '',
-      validationsAdded: false,
-      isPristine: true,
-      isdirty: false
-    };
-  },
-  handleChange(event) {
-
-    var val = event.target.value;
-
-    this.setState({
-      value: val,
-      isPristine: false,
-      isDirty: val != this.state.initialValue
-    });
-
-    var validationResult = this.validate(val);
-
-    if (this.props.handleChildChange) {
-      this.props.handleChildChange(this.props.id,
-        val,
-        val != this.props.value,
-        validationResult);
+class InputComponent extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            value: this.props.value,
+            initialValue: this.props.value,
+            isValid: true,
+            validationMessage: '',
+            validationsAdded: false,
+            isPristine: true,
+            isdirty: false
+        };
     }
 
-    if (this.props.onChange) {
-      this.props.onChange(event);
+    static defaultProps = {
+        id: '',
+        validations: [],
+        handleChildChange: () => {},
+        onChange: () => {},
+        onFocus: () => {},
+        onBlur: () => {}
     }
 
-  },
-  handleFocus(event) {
-    if (this.props.onFocus) {
-      this.props.onFocus(event);
+    handleChange = (event) => {
+
+        var val = event.target.value;
+
+        this.setState({
+            value: val,
+            isPristine: false,
+            isDirty: val != this.state.initialValue
+        });
+
+        var validationResult = this.validate(val);
+
+        this.props.handleChildChange(this.props.id,
+            val,
+            val != this.props.value,
+            validationResult);
+
+        this.props.onChange(event);
+
     }
-  },
-  handleBlur(event) {
-    if (this.props.onBlur) {
-        this.props.onBlur(event);
-    }
-  },
-  validate(val) {
-    let vals = this.props.validations || [];
-    if (!this.state.validationsAdded) {
-        switch (this.props.type) {
-          case 'email' :
-            vals.push(new Validations.EmailAddress());
-            break;
-          case 'number' :
-            vals.push(new Validations.IsNumber());
-            break;
+    validate = (val) => {
+        let vals = this.props.validations || [];
+        if (!this.state.validationsAdded) {
+            switch (this.props.type) {
+                case 'email':
+                    vals.push(new Validations.EmailAddress());
+                    break;
+                case 'number':
+                    vals.push(new Validations.IsNumber());
+                    break;
+            }
+            this.setState({
+                validationsAdded: true
+            });
         }
-        this.setState({validationsAdded: true});
-    }
 
-    if (vals.length) {
-      for (var i = 0; i < vals.length; i++) {
-        if (!vals[i].validate(val)) {
-          return {isValid: false, validationMessage: vals[i].validationMessage};
-          return;
+        if (vals.length) {
+            for (var i = 0; i < vals.length; i++) {
+                if (!vals[i].validate(val)) {
+                    return {
+                        isValid: false,
+                        validationMessage: vals[i].validationMessage
+                    };
+                    return;
+                }
+            }
+            return {
+                isValid: true,
+                validationMessage: ''
+            };
         }
-      }
-      return {isValid: true, validationMessage: ''};
     }
-  },
 };
 
-export var Input = React.createClass({
-  mixins: [InputMixin],
-  getDefaultProps() {
-    return {type: 'text'};
-  },
-  render() {
-    var p = this.props, d = p.value;
-    return(
-      <div className={classNames('formfield', {'invalid': d.isvalid===false, 'isdirty': d.isdirty})}>
+export class Input extends InputComponent {
+
+    constructor(props) {
+        super(props);
+    }
+
+    static defaultProps = {
+        type: 'text'
+    }
+
+    render() {
+        var p = this.props,
+            d = p.value;
+        return (
+            <div className={classNames('formfield', {'invalid': d.isvalid===false, 'isdirty': d.isdirty})}>
         <label htmlFor={p.id}>{p.label}</label>
         <input type={p.type || 'text'}
                id={p.id}
@@ -97,26 +105,32 @@ export var Input = React.createClass({
                maxLength={p.maxlength}
                title={d.validationErrors}
                valueLink={p.valueLink}
-               onFocus={this.handleFocus}
-               onBlur={this.handleBlur}
+               onFocus={p.onFocus}
+               onBlur={p.onBlur}
                readOnly={this.props.readOnly}
                className={this.props.className}>
         </input>
       </div>
-    );
-  }
-});
+        );
+    }
+};
 
 
-export var NumberInput = React.createClass({
-  mixins: [InputMixin],
-  getDefaultProps() {
-    return {type: 'number'};
-  },
-  render() {
-    var p = this.props, d = p.value;
-    return(
-      <div className={classNames('formfield', {'invalid': d.isvalid===false, 'isdirty': d.isdirty})}>
+export class NumberInput extends InputComponent {
+
+    constructor(props) {
+        super(props);
+    }
+
+    static defaultProps = {
+        type: 'number'
+    }
+
+    render() {
+        var p = this.props,
+            d = p.value;
+        return (
+            <div className={classNames('formfield', {'invalid': d.isvalid===false, 'isdirty': d.isdirty})}>
         <label htmlFor=''>{p.label}</label>
         <input type='number'
                id={p.id}
@@ -130,16 +144,21 @@ export var NumberInput = React.createClass({
                onBlur={this.handleBlur}>
         </input>
       </div>
-    );
-  }
-});
+        );
+    }
+};
 
-export var TextArea = React.createClass({
-  mixins: [InputMixin],
-  render() {
-    var p = this.props, d = p.value;
-    return(
-      <div className={classNames('formfield', {'invalid': d.isvalid===false, 'isdirty': d.isdirty})}>
+export class TextArea extends InputComponent {
+
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        var p = this.props,
+            d = p.value;
+        return (
+            <div className={classNames('formfield', {'invalid': d.isvalid===false, 'isdirty': d.isdirty})}>
         <label htmlFor=''>{p.label}</label>
         <textarea
                id={p.id}
@@ -149,9 +168,9 @@ export var TextArea = React.createClass({
                title={d.validationErrors}
                valueLink={p.valueLink}
                onFocus={this.handleFocus}
-               onBlur={this.handleBlur}>
+               onBlur={this.handleBlur.bind(this)}>
         </textarea>
       </div>
-    );
-  }
-});
+        );
+    }
+};

@@ -31,7 +31,7 @@ module.exports = function(api, config) {
         if(req.query.since && moment(req.query.since).isValid())
             since = moment(req.query.since);
 
-        log.debug('api.bookings: getting bookings since', since);
+        log.debug('api.bookings: getting bookings since', since.toISOString());
 
         Booking.findAsync(
             {'arrivalDate': {'$gte': since}},

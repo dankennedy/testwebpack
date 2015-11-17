@@ -38,8 +38,6 @@
     "mocha": "^2.2.5",
     "node-libs-browser": "^0.5.2",
     "node-sass": "^3.2.0",
-    "react": "^0.13.3",
-    "react-router": "^0.13.3",
     "sass-loader": "^1.0.2",
     "style-loader": "^0.12.3",
     "supertest": "^1.1.0",
@@ -56,12 +54,19 @@
     "express": "^4.13.3",
     "express-bunyan-logger": "^1.1.1",
     "express-handlebars": "^2.0.1",
+    "google-map-react": "^0.9.3",
+    "history": "^1.13.1",
     "lodash": "^3.9.3",
     "moment": "^2.10.3",
     "mongoose": "^4.2.2",
-    "nodemailer": "^1.8.0",
+    "nodemailer": "^1.10.0",
+    "react": "^0.14.2",
     "react-date-picker": "^2.1.6",
+    "react-dom": "^0.14.2",
     "react-notify-toast": "0.0.3",
-    "react-swipeable": "^3.0.2"
+    "react-router": "^1.0.0",
+    "react-swipeable": "^3.0.2",
+    "reactify": "^1.1.1",
+    "webpack": "^1.12.6"
   }
 }

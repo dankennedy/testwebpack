@@ -3,7 +3,14 @@
 import React from 'react';
 import { Link } from 'react-router';
 
-let Home = React.createClass({
+import GoogleMap from 'google-map-react';
+
+const mapProps = {
+    zoom: 16,
+    location: {lat: 54.485385, lng: -0.614941}
+  };
+
+export default class Home extends React.Component {
 
   render() {
     return(
@@ -66,14 +73,14 @@ let Home = React.createClass({
             <p>
                 15 Loggerhead Yard, Whitby, YO21 1DL
             </p>
-            <div id="map-canvas"></div>
+            <div className="map-container">
+              <GoogleMap defaultCenter={mapProps.location} defaultZoom={mapProps.zoom}>
+                  <div className="map-marker" {...mapProps.location} text={'Thimble Cottage'}></div>
+              </GoogleMap>
+            </div>
         </div>
 
       </div>
     );
   }
-});
-
-export default Home;
-
-
+};

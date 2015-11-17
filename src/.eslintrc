@@ -4,9 +4,9 @@
     "node": true,
     "es6": true
   },
-  "globals": {
-
-  },
+  "globals": [
+    "window"
+  ],
   "ecmaFeatures": {
     "jsx": true,
     "modules": false

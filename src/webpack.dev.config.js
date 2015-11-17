@@ -4,7 +4,7 @@ var webpack = require('webpack'),
     path = require('path');
 
 module.exports = {
-    devtool: 'eval-source-map',
+    devtool: 'source-map',
     debug: true,
     entry: {
         main: [

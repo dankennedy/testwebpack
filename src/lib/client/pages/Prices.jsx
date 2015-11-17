@@ -4,13 +4,14 @@ import React from 'react';
 import _ from 'lodash';
 import axios from 'axios';
 
-let Prices = React.createClass({
+export default class Prices extends React.Component {
 
-    getInitialState() {
-        return {
+    constructor(props) {
+        super(props);
+        this.state = {
             pricebands: []
         };
-    },
+    }
 
     componentDidMount() {
         axios.get('/api/pricebands').then(function(response) {
@@ -20,20 +21,20 @@ let Prices = React.createClass({
         }.bind(this)).catch(function(response) {
             console.error(response);
         });
-    },
+    }
 
     render() {
         let yearNodes = Object.keys(this.state.pricebands).map(el => {
-            return <PricebandYear year={el} entries={this.state.pricebands[el]} />;
+            return <PricebandYear year={el} entries={this.state.pricebands[el]} key={el} />;
         });
         return (
             <div className='page-container'>
                 {yearNodes}
             </div>);
     }
-});
+};
 
-let PricebandYear = React.createClass({
+class PricebandYear extends React.Component {
 
     render() {
         return (
@@ -43,17 +44,17 @@ let PricebandYear = React.createClass({
             </div>
         );
     }
-});
+};
 
-let PricebandTable = React.createClass({
+class PricebandTable extends React.Component {
 
     render() {
         let dayHeaderNodes = _.range(6).map(d => {
-            return <th>{d+2}</th>;
+            return <th key={d}>{d+2}</th>;
         });
 
-        let monthRows = _.chunk(this.props.entries, 6).map(m => {
-            return <PricebandTableRow entries={m} />;
+        let monthRows = _.chunk(this.props.entries, 6).map((m, i) => {
+            return <PricebandTableRow entries={m} key={i} />;
         });
 
         return (
@@ -68,14 +69,14 @@ let PricebandTable = React.createClass({
             </table>
         );
     }
-});
+};
 
-let PricebandTableRow = React.createClass({
+class PricebandTableRow extends React.Component {
 
     render() {
         let els = this.props.entries;
-        let priceCells = els.map(p => {
-            return <td>{p.price}</td>;
+        let priceCells = els.map((p, i) => {
+            return <td key={i}>{p.price}</td>;
         });
         return (
             <tr>
@@ -84,6 +85,4 @@ let PricebandTableRow = React.createClass({
             </tr>
         );
     }
-});
-
-export default Prices;
+};

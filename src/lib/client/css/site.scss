@@ -82,6 +82,7 @@ body {
     @include span-columns(10);
     @include shift(1);
     padding-top: 30px;
+    padding-bottom: 100px;
     @include media($tablet) {
         @include shift(0);
         padding: 20px;
