@@ -27,7 +27,7 @@ module.exports = function(api, config) {
 
     function listBookings(req, res, next) {
 
-        var since = moment();
+        var since = moment().startOf('month');
         if(req.query.since && moment(req.query.since).isValid())
             since = moment(req.query.since);
 

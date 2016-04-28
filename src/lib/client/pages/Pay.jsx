@@ -32,8 +32,8 @@ export default class Pay extends React.Component {
             });
     }
 
-    handleApplyVoucher() {
-        let voucherCode = this.refs.voucherCode.getDOMNode().value;
+    handleApplyVoucher = (e) => {
+        let voucherCode = this.refs.voucherCode.value;
 
 
         if (!(/^[0-9a-fA-F]{24}$/).test(voucherCode)){

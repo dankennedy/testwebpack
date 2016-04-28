@@ -263,12 +263,12 @@ export default class Book extends React.Component {
                         <div className='split-bookingdescription'>
                             {hasConflicts &&
                                     <p>
-                                        This date/number of nights conflicts with existing bookings.<br/>
+                                        The dates/number of nights selected conflict with existing bookings.<br/>
                                         You can select an alternative or check our availability to see
                                         which dates are available.
                                     </p>
                             }
-                            {!hasConflicts && this.state.price &&
+                            {!hasConflicts && this.state && this.state.price > 0 &&
                                     <p>
                                         {BookingUtils.getSummaryDescription(this.formDataToBookingJson())}<br/>
                                         Price: £{this.state.price}

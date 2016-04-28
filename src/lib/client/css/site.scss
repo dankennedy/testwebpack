@@ -104,18 +104,6 @@ body {
     @include omega;
 }
 
-#map-canvas {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    width: 480px;
-    height: 300px;
-    @include media($mobile) {
-        width: 280px;
-        height: 150px;
-    }
-}
-
 #{$all-text-inputs} {
     padding: 0.75em;
 }

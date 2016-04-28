@@ -6,8 +6,21 @@
     border: medium none;
 }
 
+$marker-size: 30px;
+
 .map-container {
     width: 400px;
     height: 400px;
     display: -webkit-flex;
+
+    .map-marker {
+        position: absolute;
+        width: $marker-size;
+        height: $marker-size;
+        left: -5px;
+        top: -30px;
+        background-image: url(http://maps.google.com/mapfiles/ms/micons/red.png);
+        background-repeat: none;
+    }
+
 }
