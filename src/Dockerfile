@@ -1,4 +1,4 @@
-FROM    node
+FROM    node:5
 
 ADD ./package.json /tmp/package.json
 RUN cd /tmp && npm install

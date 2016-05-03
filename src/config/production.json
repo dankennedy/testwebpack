@@ -1,6 +1,5 @@
 {
-    "logging": {},
     "email": {
-        "sendenabled": true
+        "sendingenabled": true
     }
 }

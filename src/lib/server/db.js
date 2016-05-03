@@ -28,13 +28,13 @@ module.exports = function(config, log) {
             server: {
                 socketOptions: {
                     keepAlive: 10,
-                    connectTimeoutMS: 10000
+                    connectTimeoutMS: 20000
                 },
                 auto_reconnect: true
             }
         };
 
-        log.info('db: Connecting to ' + config.env + ' instance');
+        log.info('db: Connecting to ' + config.env + ' instance for user ' + config.dbUser);
 
         if (config.isProduction) {
             mongoose.connect('mongodb://' + config.dbUser + ':' + config.dbPwd + '@ds057538.mongolab.com:57538/tcwhitby', options);

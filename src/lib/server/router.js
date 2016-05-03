@@ -35,10 +35,5 @@ module.exports = function(app, config) {
                 });
 
         });
-        // Router.create(context).run(function ran(Handler, state) {
-        //     res.render(config.isProduction ? 'index' : 'development', {
-        //         reactHtml: React.renderToString(<Handler />)
-        //     });
-        // });
     });
 };
