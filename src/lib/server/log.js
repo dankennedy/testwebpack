@@ -1,8 +1,9 @@
 'use strict';
 
-var bunyan        = require('bunyan'),
-    config        = require('server/config').logging,
-    PrettyStream  = require('bunyan-prettystream');
+var bunyan         = require('bunyan'),
+    config         = require('server/config').logging,
+    PrettyStream   = require('bunyan-prettystream'),
+    LogstashStream = require('bunyan-logstash-tcp');
 
 
 var stdout = new PrettyStream({mode:'dev'});
@@ -12,6 +13,27 @@ let streams = [{ level: config.stdout || config.level, type:'raw', stream: stdou
 if (config.file) {
   streams.push({ level: config.file, type:'file', path: config.default });
 }
+
+var outStream = LogstashStream.createStream({
+        host: 'logs.firstcs.co.uk',
+        port: 9506,
+        ssl_enable: true,
+        ca: ['/Users/dan/logstash-forwarder.crt'],
+        name: 'tcwhitby'
+      });
+
+outStream.on('connect', function() {
+    console.log('Connected!');
+});
+outStream.on('error', function(e) {
+    console.log('ERROR: ', e);
+});
+outStream.on('timeout', function() {
+    console.log('WARN : Timed out');
+});
+
+streams.push({type: 'raw',stream: outStream});
+
 var logger = bunyan.createLogger({
   name:'logger',
   level: config.level,
