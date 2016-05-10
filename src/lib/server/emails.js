@@ -166,8 +166,8 @@ module.exports = {
         return this.nodemailer.createTransport({
             service: 'gmail',
             auth: {
-                user: config.smtpUser,
-                pass: config.smtpPwd
+                user: config.email.smtpUser,
+                pass: config.email.smtpPwd
             }
         });
     },
