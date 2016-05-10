@@ -1,4 +1,12 @@
 {
+    "logging": {
+        "logstash": {
+            "host": "logs.firstcs.co.uk",
+            "port": 9506,
+            "ca_file": "/etc/ssl/logstash-forwarder.crt",
+            "tags": ["prod"]
+        }
+    },
     "email": {
         "sendingenabled": true
     }

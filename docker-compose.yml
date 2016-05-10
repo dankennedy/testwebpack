@@ -11,3 +11,5 @@ node:
         - "8080"
     env_file:
         - ./src/.env
+    volumes:
+        - ~/ssl:/etc/ssl/:ro

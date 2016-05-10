@@ -1,13 +1,11 @@
 {
     "logging": {
         "level": "info",
-        "stdout": "info",
-        "default": "log/app.log",
-        "error": "log/error.log"
+        "stdout": "info"
     },
     "email": {
         "from": "Thimble Cottage Whitby <bookings@thimblecottagewhitby.co.uk>",
-        "bcc":  "bookings@thimblecottagewhitby.co.uk",
+        "bcc": "bookings@thimblecottagewhitby.co.uk",
         "sendingenabled": false
     },
     "paymentlink": "http://www.thimblecottagewhitby.co.uk/pay/"
